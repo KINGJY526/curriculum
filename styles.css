@@ -1,3 +1,6 @@
+/* ===============================
+   기본 변수
+================================ */
 :root{
   --bg:#f6f5f3;
   --card:#ffffff;
@@ -8,6 +11,9 @@
   --radius:18px;
 }
 
+/* ===============================
+   기본 리셋
+================================ */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 body{
@@ -19,11 +25,15 @@ body{
   line-height:1.4;
 }
 
-/* 상단바 */
+/* ===============================
+   상단 바
+================================ */
 .topbar{
   position:sticky; top:0; z-index:10;
   display:flex; align-items:center; justify-content:space-between;
-  padding:12px 16px; background:var(--bg); backdrop-filter:saturate(180%) blur(8px);
+  padding:12px 16px;
+  background:var(--bg);
+  backdrop-filter:saturate(180%) blur(8px);
   border-bottom:1px solid var(--line);
 }
 .brand{ font-weight:800; letter-spacing:-0.2px; }
@@ -34,42 +44,51 @@ body{
   display:grid; place-items:center;
 }
 
-/* 컨트롤 */
-.controls{ position:sticky; top:57px; z-index:9; background:var(--bg); padding:8px 12px 10px; border-bottom:1px solid var(--line);}
-.tabs{
-  display:flex; gap:8px; overflow:auto; padding-bottom:6px;
+/* ===============================
+   탭 & 필터
+================================ */
+.controls{
+  position:sticky; top:57px; z-index:9;
+  background:var(--bg);
+  padding:8px 12px 10px;
+  border-bottom:1px solid var(--line);
 }
+.tabs{ display:flex; gap:8px; overflow:auto; padding-bottom:6px; }
 .tab{
-  white-space:nowrap; padding:8px 12px; border-radius:999px; border:1px solid var(--line);
-  background:#fff; font-size:13px;
+  white-space:nowrap; padding:8px 12px; border-radius:999px;
+  border:1px solid var(--line); background:#fff; font-size:13px;
 }
 .tab.is-active{ background:#111; color:#fff; border-color:#111; }
-.chips{
-  margin-top:8px; display:flex; gap:8px; overflow:auto;
-}
+
+.chips{ margin-top:8px; display:flex; gap:8px; overflow:auto; }
 .chip{
-  padding:6px 10px; border-radius:999px; background:var(--chip); color:#333; font-size:12px; border:1px solid transparent;
+  padding:6px 10px; border-radius:999px; background:var(--chip);
+  color:#333; font-size:12px; border:1px solid transparent;
 }
 .chip.is-active{ background:#111; color:#fff; }
 
-/* 리스트 & 카드 */
+/* ===============================
+   리스트 & 카드
+================================ */
 .list{ padding:14px; display:grid; gap:12px; }
+
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:20px; overflow:hidden; cursor:pointer;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+  box-shadow:0 1px 0 rgba(0,0,0,0.02);
 }
 .card:active{ transform:scale(0.996); }
+
 .card-head{
   display:flex; justify-content:space-between; align-items:center;
   padding:12px 12px 0 12px;
 }
 .datebox{ display:flex; gap:10px; align-items:baseline; }
 .dow{ font-weight:700; font-size:12px; color:var(--muted); }
-/* 참고: 카드 pill 색과 동일 느낌을 위해 그대로 유지 */
+/* 카드 오른쪽 분류 pill */
 .pill{
   padding:6px 10px; font-size:12px; border-radius:999px; color:#fff;
-  background: var(--card-color, #333);
+  background:var(--card-color, #333);
 }
 
 .card-body{ padding:10px 12px 14px 12px; }
@@ -78,10 +97,13 @@ body{
 /* 빈 상태 */
 .empty{ color:var(--muted); text-align:center; padding:32px 0; }
 
-/* 바텀시트 */
+/* ===============================
+   바텀시트(상세)
+================================ */
 .backdrop{
   position:fixed; inset:0; background:rgba(0,0,0,0.32); z-index:50;
 }
+
 .sheet{
   position:fixed; left:0; right:0; bottom:-100%; z-index:60;
   background:#fff; border-top-left-radius:24px; border-top-right-radius:24px;
@@ -90,80 +112,74 @@ body{
   max-height:86vh; display:flex; flex-direction:column;
 }
 .sheet.is-open{ bottom:0; }
-/* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
-.sheet-head{ position: static !important; }
-.sheet-meta{ display:flex; align-items:center; gap:8px; margin-bottom:8px; } /* ★ 간격 추가 */
 
-#sheetSemester.badge{
-  /* 학기: 옅은 틴트(색상은 JS paintBadges가 채워줌) */
-  background:#f0efed;
-  color:#333;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:4px 10px;
-  font-size:12px; font-weight:600;
+/* 헤더 */
+.sheet-head{
+  padding:12px 14px 6px;
+  border-bottom:0;               /* 구분선은 별도 .sheet-divider 사용 */
 }
-#sheetCategory.badge{
-  /* 카테고리: 카드의 .pill과 동일한 형태 */
-  margin-left:auto;                 /* 우측 정렬 */
-  border-radius:999px;
-  padding:6px 12px;
-  border:none;                      /* 색상은 JS가 지정 */
-  color:#fff; font-weight:700;
-  font-size:12px;
-}
+.sheet-meta{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
 
-
+/* 배지 공통 */
 .badge{
   background:#f0efed; color:#333;
-  border:1px solid var(--line); border-radius:12px; padding:4px 8px; font-size:12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 10px; font-size:12px; font-weight:600;
 }
-
-
-
-/* ====== 3) 제목·학점·구분선·설명 간 간격 정리 ====== */
-.sheet-title{ margin:4px 0 2px; font-size:18px; line-height:1.3; }
-.sheet-credit{
-  margin:0 0 10px;                  /* 제목 바로 아래 학점 */
-  font-size:12px; color:#9a9a9a; font-weight:600;
+/* 카테고리 배지는 카드 pill 스타일과 동일하게 보이도록 (색은 JS가 주입) */
+#sheetCategory.badge{
+  border:none; color:#fff; font-weight:700; padding:6px 12px;
 }
-.sheet-divider{                      /* 학점 아래 구분선 */
-  height:1px; background:var(--line);
-  margin:0 14px 8px;
-}
-.sheet-body{ padding:10px 14px 12px; }
-.desc{ margin:0 0 14px; color:#2a2a2a; }
+/* 제목/학점/구분선 */
+.sheet-title{ margin:6px 0 2px; font-size:18px; line-height:1.3; }
+.sheet-credit{ margin:0 0 10px; font-size:12px; color:#9a9a9a; font-weight:600; }
+.sheet-divider{ height:1px; background:var(--line); margin:0 14px 8px; }
 
+/* 본문 */
+.sheet-body{ padding:10px 14px 12px; overflow:auto; }
+.desc{ margin:0 0 20px; color:#2a2a2a; } /* 설명과 연계노드 사이 간격 확장 */
+.related{ margin-top:6px; }
 .related h4{ margin:0 0 8px; font-size:13px; color:#555; }
 .tagrow{ display:flex; flex-wrap:wrap; gap:6px; }
 .tag{ background:#f4f3f1; border:1px solid var(--line); border-radius:999px; padding:6px 10px; font-size:12px; }
-.sheet-foot{ display:flex; gap:10px; align-items:center; padding:10px 14px 16px; border-top:1px solid var(--line); }
+
+/* 푸터 */
+.sheet-foot{
+  display:flex; gap:10px; align-items:center;
+  padding:10px 14px 16px; border-top:1px solid var(--line);
+}
 .primary-btn{
-  margin-left:auto; padding:10px 14px; border-radius:14px; border:1px solid #111; background:#111; color:#fff; font-weight:700;
+  margin-left:auto; padding:10px 14px; border-radius:14px;
+  border:1px solid #111; background:#111; color:#fff; font-weight:700;
 }
 .primary-btn:disabled{ opacity:.5; }
 
-/* ====== 1) 닫기 X : 시트 외곽 + 하얀 X ====== */
+/* ===============================
+   닫기 버튼(X) – 화면 상단 고정(하얀 X)
+   시트가 열렸을 때만 표시
+================================ */
 .sheet-close{
-  position:absolute;
+  position:fixed;                 /* 뷰포트 기준으로 상단에 고정 */
+  top:calc(env(safe-area-inset-top, 0px) + 12px);
   right:16px;
-  top:0px;                   /* 시트 상단 밖으로 확실히 */
   width:44px; height:44px;
   border:none; background:transparent;
   color:#fff; font-size:22px; line-height:1;
   display:grid; place-items:center;
   text-shadow:0 1px 3px rgba(0,0,0,.45);
-  z-index:70; cursor:pointer;
-  pointer-events:auto;
+  z-index:999; cursor:pointer;
+  opacity:0; pointer-events:none; /* 기본 숨김 */
+}
+.sheet.is-open .sheet-close{
+  opacity:1; pointer-events:auto; /* 시트 열리면 표시 */
 }
 .sheet-close:active{ transform:scale(.96); }
-.sheet-close::before{
-  content:"";                /* 터치 면적 살짝 확장 */
-  position:absolute; inset:-6px;
-}
 
-/* iOS safe area */
+/* ===============================
+   iOS Safe Area
+================================ */
 @supports(padding:max(0px)){
-  .topbar{ padding-top: max(12px, env(safe-area-inset-top)); }
-  .sheet{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+  .topbar{ padding-top:max(12px, env(safe-area-inset-top)); }
+  .sheet{ padding-bottom:max(0px, env(safe-area-inset-bottom)); }
 }
