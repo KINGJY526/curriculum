@@ -214,7 +214,7 @@
         description: courseDescriptions[t] || "설명 없음",
         relatedNodes: []
       }))
-    );
+      );
 
     // -------- 연계 노드 그룹(행님 제공) → 매핑 --------
     const groupData = [
@@ -239,6 +239,11 @@
     let currentSemester = "ALL";
     let currentCategory = "ALL";
 
+     // ★ 하이라이트 상태 추가
+    let selectedNode = null;
+    let pendingNodeInSheet = null;
+    const GROUP_BY_NAME = new Map(groupData.map(g => [g.name, new Set(g.subjects.map(s => norm(s)))]));
+
     // -------- DOM --------
     const listEl = document.getElementById("courseList");
     const tabWrap = document.getElementById("semesterTabs");
@@ -261,7 +266,8 @@
       const data = COURSES.filter(c =>
         (currentSemester === "ALL" || c.semester === currentSemester) &&
         (currentCategory === "ALL" || c.category === currentCategory)
-      );
+        );
+      listEl.classList.toggle("has-highlight", !!selectedNode);
 
       if (data.length === 0) {
         listEl.innerHTML = `<p class="empty">해당 조건의 과목이 없습니다.</p>`;
@@ -275,6 +281,14 @@
         node.querySelector(".pill").textContent = c.category;
         node.querySelector(".title").textContent = c.title;
         node.addEventListener("click", () => openSheet(c));
+
+        // ★ 하이라이트 적용
+        if (selectedNode) {
+          const inNode = GROUP_BY_NAME.get(selectedNode)?.has(norm(c.title));
+          node.classList.toggle("is-hl", !!inNode);
+          node.classList.toggle("is-dim", !inNode);
+        }
+
         listEl.appendChild(node);
       });
     }
@@ -300,55 +314,92 @@
       paintBadges(course);
 
       sheetBody.innerHTML = `
-        <p class="desc">${course.description}</p>
-        <div class="related">
-          <h4>연계 노드</h4>
-          <div class="tagrow">
-            ${
-              (course.relatedNodes && course.relatedNodes.length)
-              ? course.relatedNodes.map(r => `<span class="tag" data-node="${r}">${r}</span>`).join("")
-              : '<span class="tag" aria-disabled="true">연계 노드 없음</span>'
-            }
-          </div>
-        </div>`;
+      <p class="desc">${course.description}</p>
+      <div class="related">
+        <h4>연계 노드</h4>
+        <div class="tagrow">
+          ${
+            (course.relatedNodes && course.relatedNodes.length)
+            ? course.relatedNodes.map(r => `<button class="tag tag-node" data-node="${r}" type="button">${r}</button>`).join("")
+            : '<span class="tag" aria-disabled="true">연계 노드 없음</span>'
+          }
+        </div>
+          </div>`;
 
-      sheetTags.innerHTML = "";
-      openSyllabus.textContent = "해당 노드 보기";
-      openSyllabus.disabled = !(course.relatedNodes && course.relatedNodes.length);
+    // ★ 노드 태그 선택 로직
+          pendingNodeInSheet = null;
+          sheetBody.querySelectorAll(".tag-node").forEach(btn => {
+            btn.addEventListener("click", () => {
+              sheetBody.querySelectorAll(".tag-node").forEach(b => b.classList.remove("is-selected"));
+              btn.classList.add("is-selected");
+              pendingNodeInSheet = btn.dataset.node;
+              openSyllabus.disabled = false;
+            });
+          });
 
-      backdrop.hidden = false;
-      sheet.setAttribute("aria-hidden", "false");
-      sheet.classList.add("is-open");
-      document.body.style.overflow = "hidden";
-    }
-    function closeSheet() {
-      sheet.classList.remove("is-open");
-      sheet.setAttribute("aria-hidden", "true");
-      backdrop.hidden = true;
-      document.body.style.overflow = "";
-    }
+          openSyllabus.textContent = "해당 노드 보기";
+          openSyllabus.disabled = !(course.relatedNodes && course.relatedNodes.length);
+
+          backdrop.hidden = false;
+          sheet.setAttribute("aria-hidden", "false");
+          sheet.classList.add("is-open");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeSheet() {
+          sheet.classList.remove("is-open");
+          sheet.setAttribute("aria-hidden", "true");
+          backdrop.hidden = true;
+          document.body.style.overflow = "";
+        }
+
+         // -------- 하이라이트 인디케이터 --------
+        function updateNodeIndicator(){
+          let badge = document.getElementById("nodeIndicator");
+          if (!selectedNode) {
+            if (badge) badge.remove();
+            return;
+          }
+          if (!badge) {
+            badge = document.createElement("button");
+            badge.id = "nodeIndicator";
+            badge.className = "chip chip-node-indicator";
+            badge.type = "button";
+            badge.addEventListener("click", () => { selectedNode = null; render(); });
+            chipWrap.appendChild(badge);
+          }
+          badge.textContent = `노드 하이라이트: ${selectedNode} ✕`;
+        }
 
     // -------- 이벤트 --------
-    tabWrap.addEventListener("click", (e) => {
-      const btn = e.target.closest(".tab");
-      if (!btn) return;
-      [...tabWrap.children].forEach(b => b.classList.toggle("is-active", b === btn));
-      currentSemester = btn.dataset.semester;
-      render();
-    });
-    chipWrap.addEventListener("click", (e) => {
-      const chip = e.target.closest(".chip");
-      if (!chip) return;
-      [...chipWrap.children].forEach(c => c.classList.toggle("is-active", c === chip));
-      currentCategory = chip.dataset.category;
-      render();
-    });
-    closeSheetBtn.addEventListener("click", closeSheet);
-    backdrop.addEventListener("click", closeSheet);
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+        tabWrap.addEventListener("click", (e) => {
+          const btn = e.target.closest(".tab");
+          if (!btn) return;
+          [...tabWrap.children].forEach(b => b.classList.toggle("is-active", b === btn));
+          currentSemester = btn.dataset.semester;
+          render();
+        });
+        chipWrap.addEventListener("click", (e) => {
+          const chip = e.target.closest(".chip");
+          if (!chip) return;
+          [...chipWrap.children].forEach(c => c.classList.toggle("is-active", c === chip));
+          currentCategory = chip.dataset.category;
+          render();
+        });
+        closeSheetBtn.addEventListener("click", closeSheet);
+        backdrop.addEventListener("click", closeSheet);
+        document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+
+  // ★ "해당 노드 보기" 클릭 → 하이라이트 적용
+        openSyllabus.addEventListener("click", () => {
+          if (!pendingNodeInSheet) return;
+          selectedNode = pendingNodeInSheet;
+          closeSheet();
+          render();
+        });
 
     // -------- 초기 렌더 --------
-    render();
-  </script>
-</body>
-</html>
+        render();
+      </script>
+    </body>
+    </html>

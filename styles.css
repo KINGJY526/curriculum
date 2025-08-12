@@ -93,7 +93,7 @@ body{
 /* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
 .sheet-head{ position:static !important; padding:12px 14px 6px !important; border-bottom:0; }
 
-.sheet-meta{ display:flex; align-items:center; gap:30px; justify-content:flex-start; margin-bottom:12px; }
+.sheet-meta{ display:flex; align-items:center; gap:8px; justify-content:flex-start; margin-bottom:12px; }
 
 #sheetSemester.badge{
   /* 학기: 옅은 틴트(색상은 JS paintBadges가 채워줌) */
@@ -165,4 +165,22 @@ body{
 @supports(padding:max(0px)){
   .topbar{ padding-top: max(12px, env(safe-area-inset-top)); }
   .sheet{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+}
+
+.list.has-highlight .card{ opacity:.35; transition:opacity .18s ease, transform .18s ease, box-shadow .18s ease; }
+.list.has-highlight .card.is-hl{
+  opacity:1;
+  border-color: rgba(0,0,0,.18);
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+.list.has-highlight .card.is-dim{ filter:grayscale(.08); }
+
+.tag.tag-node{ cursor:pointer; }
+.tag.tag-node.is-selected{
+  background:#111; color:#fff; border-color:#111;
+}
+
+.chip-node-indicator{
+  background:#111; color:#fff; border:1px solid #111;
+  font-weight:700;
 }
