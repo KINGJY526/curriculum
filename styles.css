@@ -92,7 +92,7 @@ body{
 .sheet.is-open{ bottom:0; }
 /* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
 .sheet-head{ position: static !important; }
-.sheet-meta{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.sheet-meta{ display:flex; align-items:center; gap:8px; justify-content:flex-start; margin-bottom:12px; }
 
 #sheetSemester.badge{
   /* 학기: 옅은 틴트(색상은 JS paintBadges가 채워줌) */
@@ -132,9 +132,10 @@ body{
   margin:0 14px 8px;
 }
 .sheet-body{ padding:10px 14px 12px; }
-.desc{ margin:0 0 20px; color:#2a2a2a; }
+.desc{ margin:0 0 20px; }
 
-.related h4{ margin:0 0 8px; font-size:13px; color:#555; }
+
+.related h4{ margin-top:6px; font-size:13px; color:#555; }
 .tagrow{ display:flex; flex-wrap:wrap; gap:6px; }
 .tag{ background:#f4f3f1; border:1px solid var(--line); border-radius:999px; padding:6px 10px; font-size:12px; }
 .sheet-foot{ display:flex; gap:10px; align-items:center; padding:10px 14px 16px; border-top:1px solid var(--line); }
@@ -146,20 +147,13 @@ body{
 /* ====== 1) 닫기 X : 시트 외곽 + 하얀 X ====== */
 /* 화면 상단 고정: 시트가 열릴 때만 보이도록 */
 .sheet-close{
-  position:fixed;                           /* ★ 뷰포트 기준 */
-  top: calc(env(safe-area-inset-top, 0px) + 12px);
-  right: 16px;
-  width:44px; height:44px;
-  border:none; background:transparent;
-  color:#fff; font-size:22px; line-height:1;
-  display:grid; place-items:center;
-  text-shadow:0 1px 3px rgba(0,0,0,.45);
-  z-index:999; cursor:pointer;
-  opacity:0; pointer-events:none;           /* 기본은 숨김 */
+  position:fixed; top:calc(env(safe-area-inset-top,0px) + 12px); right:16px;
+  width:44px; height:44px; border:none; background:transparent;
+  color:#fff; font-size:22px; line-height:1; display:grid; place-items:center;
+  text-shadow:0 1px 3px rgba(0,0,0,.45); z-index:1000; 
+  opacity:0; pointer-events:none;
 }
-.sheet.is-open .sheet-close{
-  opacity:1; pointer-events:auto;           /* 시트 열릴 때만 표시 */
-}
+.sheet.is-open .sheet-close{ opacity:1; pointer-events:auto; }
 .sheet-close:active{ transform:scale(.96); }
 .sheet-close::before{
   content:"";                /* 터치 면적 살짝 확장 */
