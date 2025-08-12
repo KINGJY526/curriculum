@@ -91,7 +91,11 @@ body{
 }
 .sheet.is-open{ bottom:0; }
 /* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
-.sheet-head{ position: static !important; }
+.sheet-head{
+  position:static !important;
+  padding:12px 14px 6px !important;  /* ★ 좌우 14px */
+  border-bottom:0;
+}
 .sheet-meta{ display:flex; align-items:center; gap:8px; justify-content:flex-start; margin-bottom:12px; }
 
 #sheetSemester.badge{
@@ -131,11 +135,11 @@ body{
   height:1px; background:var(--line);
   margin:0 14px 8px;
 }
-.sheet-body{ padding:10px 14px 12px; }
+.sheet-body{ padding:12px 14px 12px; }
 .desc{ margin:0 0 20px; }
 
 
-.related h4{ margin-top:6px; font-size:13px; color:#555; }
+.related h4{ margin:0 0 8px; font-size:13px; color:#555; }
 .tagrow{ display:flex; flex-wrap:wrap; gap:6px; }
 .tag{ background:#f4f3f1; border:1px solid var(--line); border-radius:999px; padding:6px 10px; font-size:12px; }
 .sheet-foot{ display:flex; gap:10px; align-items:center; padding:10px 14px 16px; border-top:1px solid var(--line); }
