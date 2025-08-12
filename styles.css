@@ -93,7 +93,7 @@ body{
 /* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
 .sheet-head{ position:static !important; padding:12px 14px 6px !important; border-bottom:0; }
 
-.sheet-meta{ display:flex; align-items:center; gap:8px; justify-content:flex-start; margin-bottom:12px; }
+.sheet-meta{ display:flex; align-items:center; gap:10px; justify-content:flex-start; margin-bottom:12px; }
 
 #sheetSemester.badge{
   /* 학기: 옅은 틴트(색상은 JS paintBadges가 채워줌) */
