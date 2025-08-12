@@ -92,7 +92,7 @@ body{
 .sheet.is-open{ bottom:0; }
 /* ====== 2) 시트 헤더 배지 스타일 통일 ====== */
 .sheet-head{ position: static !important; }
-.sheet-meta{ display:flex; align-items:center; gap:8px; margin-bottom:8px; } /* ★ 간격 추가 */
+.sheet-meta{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
 
 #sheetSemester.badge{
   /* 학기: 옅은 틴트(색상은 JS paintBadges가 채워줌) */
@@ -105,7 +105,7 @@ body{
 }
 #sheetCategory.badge{
   /* 카테고리: 카드의 .pill과 동일한 형태 */
-  margin-left:auto;                 /* 우측 정렬 */
+  margin-left:0;                 
   border-radius:999px;
   padding:6px 12px;
   border:none;                      /* 색상은 JS가 지정 */
@@ -132,7 +132,7 @@ body{
   margin:0 14px 8px;
 }
 .sheet-body{ padding:10px 14px 12px; }
-.desc{ margin:0 0 14px; color:#2a2a2a; }
+.desc{ margin:0 0 20px; color:#2a2a2a; }
 
 .related h4{ margin:0 0 8px; font-size:13px; color:#555; }
 .tagrow{ display:flex; flex-wrap:wrap; gap:6px; }
@@ -144,17 +144,21 @@ body{
 .primary-btn:disabled{ opacity:.5; }
 
 /* ====== 1) 닫기 X : 시트 외곽 + 하얀 X ====== */
+/* 화면 상단 고정: 시트가 열릴 때만 보이도록 */
 .sheet-close{
-  position:absolute;
-  right:16px;
-  top:-28px;                   /* 시트 상단 밖으로 확실히 */
+  position:fixed;                           /* ★ 뷰포트 기준 */
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  right: 16px;
   width:44px; height:44px;
   border:none; background:transparent;
   color:#fff; font-size:22px; line-height:1;
   display:grid; place-items:center;
   text-shadow:0 1px 3px rgba(0,0,0,.45);
-  z-index:70; cursor:pointer;
-  pointer-events:auto;
+  z-index:999; cursor:pointer;
+  opacity:0; pointer-events:none;           /* 기본은 숨김 */
+}
+.sheet.is-open .sheet-close{
+  opacity:1; pointer-events:auto;           /* 시트 열릴 때만 표시 */
 }
 .sheet-close:active{ transform:scale(.96); }
 .sheet-close::before{
