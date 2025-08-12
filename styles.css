@@ -108,12 +108,3 @@ body{
   .topbar{ padding-top: max(12px, env(safe-area-inset-top)); }
   .sheet{ padding-bottom: max(0px, env(safe-area-inset-bottom)); }
 }
-
-/* 즐겨찾기 별 버튼 */
-.icon-star{
-  border:none; background:transparent; cursor:pointer;
-  color:#c6c6c6; font-size:18px; margin-left:8px;
-}
-.icon-star.is-on{
-  color:#ffb400; text-shadow:0 0 .5px rgba(0,0,0,.25);
-}
