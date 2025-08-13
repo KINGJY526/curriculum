@@ -240,10 +240,15 @@ body{
 }
 
 /* 바텀시트 과목 이미지 */
-.sheet-image{ margin-top:12px; }
-.sheet-image img{
-  width:100%; height:auto; display:block;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:#fff;           /* 로딩중 배경 */
+.sheet-image {
+  margin: 12px 14px 0;  /* 좌우 14px -> sheet-body와 동일 */
+}
+
+.sheet-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fff; /* 로딩중 배경 */
 }

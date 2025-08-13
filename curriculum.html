@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>디자인컨버전스학부 이수체계 (모바일)</title>
-  <link rel="stylesheet" href="styles.css?v=2025-08-14-14" />
+  <link rel="stylesheet" href="styles.css?v=2025-08-14-15" />
 </head>
 <body>
   <!-- 상단 바 -->
@@ -195,13 +195,6 @@
       { semester: "3-2", category: "Elective", titles: ["인터랙티브3D", "데이터기반디자인스튜디오", "사물인터넷", "모바일디자인", "VR", "디자인전략", "Book Design", "Branding & Media [캡스톤디자인]", "패키지디자인", "Branded Environments", "지속가능디자인", "오브젝트 & 스타일링", "Design Challenge [캡스톤디자인]", "Advanced Typography"] }
     ];
 
-    // 과목별 상세 하단 이미지
-    const courseImages = {
-      "Creative Thinking(1)": "CT1.jpg",
-      "Making Workshop(1)": "MW1.jpg",
-      "Visual Studio(1)": "VS1.jpg",
-      "Interaction Lab(1)": "IL1.jpg"
-    };
 
     // -------- 유틸 --------
     const toId = (title) => title.replace(/\s+/g, "_").replace(/[^\w가-힣()&\-\[\]]/g, "").slice(0,40);
@@ -322,6 +315,14 @@ let currentCategory = "ALL";
       sheetSemester.style.borderColor = hexToRgba(catColor, 0.25);
       sheetSemester.style.color = "#333";
     }
+
+        // 과목별 상세 하단 이미지
+    const courseImages = {
+      "Creative Thinking(1)": "CT1.jpg",
+      "Making Workshop(1)": "MW1.jpg",
+      "Visual Studio(1)": "VS1.jpg",
+      "Interaction Lab(1)": "IL1.jpg"
+    };
 
     function openSheet(course){
       sheetSemester.textContent = course.semester;
