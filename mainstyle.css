@@ -138,13 +138,8 @@ body{
 
 /* 화살표는 처음부터 중앙 하단에 */
 .scroll-cue{
-  position:absolute; left:50%; transform:translateX(-50%);
-  bottom:14px; width:56px; height:56px;  /* 살짝 키움 */
-  border-radius:999px; border:1px solid rgba(0,0,0,.18);
-  background:#fff; color:#111; display:grid; place-items:center;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-  animation: cue-bounce 1.6s ease-in-out infinite;
-  z-index:3;
+  left:50vw; transform:translateX(-50%);
+  bottom:14px; opacity:1; z-index:5;
 }
 
 
