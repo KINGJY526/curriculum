@@ -50,12 +50,13 @@ body{
 /* 컨트롤 */
 /* 컨트롤 바: 네비 바로 아래에 들러붙도록 */
 .controls{
-  position: fixed;
+  position: sticky;
   top: var(--nav-h);
   z-index: 9;
   background: var(--bg);
-  padding: 8px var(--container-x) 10px;
-  margin-top: 0;          /* 확실히 위 여백 제거 */
+  padding: 8px var(--container-x) calc(10px + var(--controls-gap)); /* ↓ 공간을 패딩으로 */
+  border-bottom:1px solid var(--line);
+  margin-bottom: 0; /* sticky 상태에서도 겹침 없음 */
 }
 
 .tabs{
