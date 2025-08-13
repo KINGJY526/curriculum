@@ -126,21 +126,23 @@ body{
 .scroll-cue{
   position:absolute;
   left:50%;
-  bottom: max(14px, env(safe-area-inset-bottom)); /* 아이폰 홈바 여유 */
+  bottom: max(14px, env(safe-area-inset-bottom));
   width:56px; height:56px;
-  border-radius:999px; border:1px solid rgba(0,0,0,.18);
-  background:#fff; color:#111; display:grid; place-items:center;
+  transform: translate(-50%, 0);
+  display:grid; place-items:center;   /* 내부 정중앙 */
+  border-radius:999px; background:#fff; border:1px solid rgba(0,0,0,.18);
   box-shadow:0 6px 16px rgba(0,0,0,.08);
-  transform: translate(-50%, 0);       /* ← X축 중앙 고정 */
   animation: cue-bounce 1.6s ease-in-out infinite;
 }
 
-/* 점프 애니메이션은 translateY만 사용해서 X축 중앙값을 건드리지 않게 */
+/* 애니메이션에도 항상 -50% 포함 (사파리 보정) */
 @keyframes cue-bounce{
   0%,100%{ transform: translate(-50%, 0); }
   50%    { transform: translate(-50%, -6px); }
 }
-.scroll-cue{ animation: cue-bounce 1.6s ease-in-out infinite; }
+
+/* SVG 크기만 지정하면 진짜 가운데에 보임 */
+.scroll-cue .chev{ width:22px; height:22px; display:block; }
 
 /* 설명 섹션 간격 살짝 축소 */
 .spacer{ height:18vh; background:#f7f7f7; border-bottom:1px solid var(--line); }
