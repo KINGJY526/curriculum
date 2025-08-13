@@ -26,20 +26,20 @@ body{
 }
 
 /* ========== Navigation (공통) ========== */
+/* 네비: 배경을 페이지 배경과 동일 + 밑줄 제거 + 경계선 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:var(--bg);              /* ← 배경색과 동일 */
+  background:var(--bg);               /* ← 페이지 배경과 동일 */
+  border-bottom:1px solid var(--line);
   box-shadow:none; backdrop-filter:none;
 }
-.nav .nav-logo{
-  font-weight:700; line-height:1.1; text-decoration:none;
-  color:#111; font-size:1.1rem; letter-spacing:.2px;
-}
-/* 상단바 링크 색 보정(여기서도 혹시 덮이면) */
 .nav .nav-links a,
-.nav .nav-links a:visited{ color:#111 !important; }
+.nav .nav-links a:visited{
+  color:#111 !important;
+  text-decoration:none;               /* ← 밑줄 제거 */
+}
 @media (max-width:720px){
   .nav{ padding:16px var(--container-x); }
   .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
@@ -51,40 +51,31 @@ body{
 
 /* 컨트롤 */
 /* 컨트롤 바: 네비 바로 아래에 들러붙도록 */
+/* 컨트롤 바(탭/칩) */
 .controls{
-  position: sticky;
-  top: var(--nav-h);
-  z-index: 9;
+  position: sticky; top: var(--nav-h); z-index: 9;
   background: var(--bg);
-  padding: 8px var(--container-x) 10px;  /* 좌우 여백도 컨테이너에 맞춤 */
+  padding: 8px var(--container-x) 10px;
   border-bottom:1px solid var(--line);
   margin-bottom: var(--controls-gap);
 }
 
-.tabs{
-  display:flex; gap:8px; overflow:auto; padding-bottom:6px;
-}
+/* 학기 탭: 간격 8px → 7px (1px 축소) */
+.tabs{ display:flex; gap:7px; overflow:auto; padding-bottom:6px; }
+.tabs::-webkit-scrollbar{ display:none; }
+
 .tab{
   white-space:nowrap; padding:8px 12px; border-radius:999px; border:1px solid var(--line);
   background:#fff; font-size:13px;
 }
 .tab.is-active{ background:#111; color:#fff; border-color:#111; }
-.chips{
-  margin-top:8px; display:flex; gap:8px; overflow:auto;
-}
-.chip{
-  padding:6px 10px; border-radius:999px; background:var(--chip); color:#333; font-size:12px; border:1px solid transparent;
-}
-.chip.is-active{ background:#111; color:#fff; }
 
-/* 리스트 & 카드 */
-/* 컨테이너 여백과 맞추려면 리스트에도 좌우 패딩을 컨트롤과 동일하게 */
-.list{
-  padding: 14px var(--container-x);   /* 좌우 여백 통일 */
-  display:grid; gap:12px;
-  /* 컨트롤 영역이 차지하는 높이만큼 자연스러운 여백 (초기 구간 겹침 방지) */
-  scroll-margin-top: calc(var(--nav-h) + 8px);
-}
+/* 카테고리 칩(그대로) */
+.chips{ margin-top:8px; display:flex; gap:8px; overflow:auto; }
+.chips::-webkit-scrollbar{ display:none; }
+
+/* 리스트 여백은 유지(겹침 방지) */
+.list{ padding:14px var(--container-x); display:grid; gap:12px; scroll-margin-top: calc(var(--nav-h) + 8px); }
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:20px; overflow:hidden; cursor:pointer;

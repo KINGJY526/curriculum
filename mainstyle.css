@@ -18,11 +18,12 @@
 /* ========== Reset & Base ========== */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+html, body { overflow-x: hidden; }
 body{
   margin:0;
   font-family: 'SUIT', ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
-  color:var(—text);
-  background:var(—bg);
+  color:var(--text);
+  background:var(--bg);
   -webkit-font-smoothing:antialiased;
   line-height:1.5;
 }
@@ -35,22 +36,20 @@ body{
 }
 
 /* ========== Navigation (공통) ========== */
+/* 네비게이션: 불투명 + 밑줄 제거 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:transparent; /* 항상 투명 */
-  box-shadow:none; backdrop-filter:none; /* 스크롤에 반응 없음 */
+  background:#fff;                    /* ← 투명 금지 */
+  border-bottom:1px solid var(--line);
+  box-shadow:none; backdrop-filter:none;
 }
-.nav .nav-logo{
-  font-weight:700; line-height:1.1; text-decoration:none;
-  color:#111; font-size:1.1rem; letter-spacing:.2px;
+.nav .nav-links a,
+.nav .nav-links a:visited{
+  color:#111 !important;
+  text-decoration:none;               /* ← 밑줄 제거 */
 }
-.nav .nav-links a{
-  text-decoration:none; color:#111; margin-left:1.8rem; font-size:.98rem;
-  transition:opacity .2s ease, color .2s ease;
-}
-.nav .nav-links a:hover{ color:var(--accent); }
 @media (max-width:720px){
   .nav{ padding:16px var(--container-x); }
   .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
@@ -85,46 +84,67 @@ body{
 }
 
 /* 히어로 풀블리드(좌우 여백 제거) */
-.hero-vertical .container.hero-frame{
-  max-width:100%;
-  padding-left:0;
-  padding-right:0;
+/* 히어로 영역 자체에서 클리핑(겹침 방지) */
+.hero-vertical{
+  margin-top: var(--nav-h);
+  min-height: calc(100vh - var(--nav-h));
+  position: relative;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  overflow:hidden;                     /* ← 아래 섹션으로 넘치지 않게 */
 }
 
-/* 양옆 세로 마키 너비 동일 */
+/* 히어로 풀블리드 */
+.hero-vertical .container.hero-frame{
+  position:relative;
+  height: calc(100vh - var(--nav-h));
+  max-width:100%;
+  padding-left:0; padding-right:0;
+}
+
+/* 좌우 세로 마키: 한 줄만, 동일 폭, 네비 아래에서만 보이게 */
 .v-marquee{
   position:absolute; top:0; bottom:0;
   width:clamp(56px, 12vw, 90px);
   overflow:hidden; pointer-events:none;
+  z-index:1;                           /* 텍스트: 로고보다 아래 */
 }
 .v-left{ left:0; } .v-right{ right:0; }
 
-/* 한 줄 세로 텍스트(위로 흐름) */
 .v-track{
   position:absolute; inset:0;
-  writing-mode:vertical-rl;       /* 글자 세로 */
-  text-orientation:mixed;
-  white-space:nowrap;             /* 한 줄 고정 */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  white-space: nowrap;                 /* 한 줄 고정 */
   font-weight:300;
-  font-size:clamp(18px, 5.4vw, 28px);
+  font-size:clamp(18px, 5.2vw, 28px);
   line-height:1; color:#000;
-  animation:v-scroll 18s linear infinite;
+  animation: v-scroll 18s linear infinite;
 }
 .v-track .chunk{ display:inline-block; padding-block:22px; }
 
-/* 무한 스크롤(띠지처럼 쭈르륵) */
-@keyframes v-scroll{ from{ transform:translateY(0); } to{ transform:translateY(-50%); } }
+/* 띠지처럼 계속 위로 흐름 */
+@keyframes v-scroll{
+  from{ transform: translateY(0); }
+  to  { transform: translateY(-50%); } /* 반복용 청크 기준 */
+}
 
-/* 중앙 로고 크게 */
+/* 중앙 로고 더 키움 + 최상단 배치 */
+.hero-center{ position:absolute; inset:0; display:grid; place-items:center; z-index:2; }
 .hero-center img{
-  width:clamp(140px, 34vw, 260px);
+  width: clamp(180px, 38vw, 320px);     /* ← 크기 업 */
   height:auto; display:block;
 }
 
 /* 화살표는 처음부터 중앙 하단에 */
 .scroll-cue{
-  left:50vw; transform:translateX(-50%);
-  bottom:14px; opacity:1; z-index:5;
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:14px; width:56px; height:56px;  /* 살짝 키움 */
+  border-radius:999px; border:1px solid rgba(0,0,0,.18);
+  background:#fff; color:#111; display:grid; place-items:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  animation: cue-bounce 1.6s ease-in-out infinite;
+  z-index:3;
 }
 
 
