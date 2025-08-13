@@ -84,70 +84,49 @@ body{
   --nav-h:64px;          /* 고정 네비 높이(아래에서 재사용) */
 }
 
+/* 히어로 풀블리드(좌우 여백 제거) */
 .hero-vertical .container.hero-frame{
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  max-width:100%;
+  padding-left:0;
+  padding-right:0;
 }
 
-.hero-frame{
-  position: relative;
-  height: calc(100vh - var(--nav-h));
+/* 양옆 세로 마키 너비 동일 */
+.v-marquee{
+  position:absolute; top:0; bottom:0;
+  width:clamp(56px, 12vw, 90px);
+  overflow:hidden; pointer-events:none;
 }
+.v-left{ left:0; } .v-right{ right:0; }
 
-/* 양옆 세로 트랙 */
-.v-marquee{ width: clamp(52px, 12vw, 96px); }
-.v-left{  left:0; }
-.v-right{ right:0; }
-
-/* 세로 글자: 세로쓰기 + 위로 흐름 */
+/* 한 줄 세로 텍스트(위로 흐름) */
 .v-track{
   position:absolute; inset:0;
-  display:flex; flex-direction:column; align-items:center;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  writing-mode:vertical-rl;       /* 글자 세로 */
+  text-orientation:mixed;
+  white-space:nowrap;             /* 한 줄 고정 */
   font-weight:300;
-  font-size: clamp(18px, 5.2vw, 28px);
-  letter-spacing:.02em; color:#000;
-  animation: v-scroll 18s linear infinite;
+  font-size:clamp(18px, 5.4vw, 28px);
+  line-height:1; color:#000;
+  animation:v-scroll 18s linear infinite;
 }
-.v-track.clone{ top:100%; } /* 무한 루프용 두 번째 트랙 */
+.v-track .chunk{ display:inline-block; padding-block:22px; }
 
-.v-track span{
-  padding: 24px 0;
-  white-space:nowrap;
-}
+/* 무한 스크롤(띠지처럼 쭈르륵) */
+@keyframes v-scroll{ from{ transform:translateY(0); } to{ transform:translateY(-50%); } }
 
-/* 중앙 로고 */
-.hero-center{
-  position:absolute; inset:0;
-  display:grid; place-items:center;
-}
+/* 중앙 로고 크게 */
 .hero-center img{
-  width: clamp(84px, 28vw, 160px);   /* 모바일 더 작게 */
-  height:auto;
-}
-@media (min-width:721px){
-  .hero-center img{ width: clamp(120px, 18vw, 220px); }
+  width:clamp(140px, 34vw, 260px);
+  height:auto; display:block;
 }
 
-
-/* 세로 스크롤 애니메이션 */
-@keyframes v-scroll{
-  from{ transform: translateY(0); }
-  to{   transform: translateY(-100%); }
-}
-
-/* 아래로 안내 화살표: 항상 즉시 보이도록 */
+/* 화살표는 처음부터 중앙 하단에 */
 .scroll-cue{
-  left: 50vw;               /* 컨테이너가 아니라 뷰포트 기준으로 */
-  transform: translateX(-50%);
-  bottom: 14px;
-  z-index: 5;
-  opacity: 1;
+  left:50vw; transform:translateX(-50%);
+  bottom:14px; opacity:1; z-index:5;
 }
-.scroll-cue:hover{ background:#111; color:#fff; }
-@keyframes cue-bounce{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,-6px);} }
+
 
 
 /* 사용자 접근성: 애니메이션 최소화 설정 시 멈춤 */

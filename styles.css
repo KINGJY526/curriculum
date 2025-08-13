@@ -14,6 +14,7 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+html, body{ overflow-x:hidden; }     /* 페이지 가로 스크롤바 완전 제거 */
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
@@ -29,8 +30,8 @@ body{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:transparent; /* 항상 투명 */
-  box-shadow:none; backdrop-filter:none; /* 스크롤에 반응 없음 */
+  background:var(--bg);              /* ← 배경색과 동일 */
+  box-shadow:none; backdrop-filter:none;
 }
 .nav .nav-logo{
   font-weight:700; line-height:1.1; text-decoration:none;
