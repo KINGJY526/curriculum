@@ -1,17 +1,18 @@
 /* ========== Design System ========== */
 :root{
-  —bg:#f6f5f3;
-  —card:#ffffff;
-  —text:#121212;
-  —muted:#767676;
-  —line:#e7e4e0;
-  —chip:#e9e7e4;
-  —radius:18px;
+  --bg:#f6f5f3;
+  --card:#ffffff;
+  --text:#121212;
+  --muted:#767676;
+  --line:#e7e4e0;
+  --chip:#e9e7e4;
+  --radius:18px;
 
-  —accent:#FF560E;
+  --accent:#FF560E;
 
-  —max-width:1280px;
-  —container-x: clamp(14px, 3.5vw, 28px);
+  /* 페이지 좌우 여백(이수체계도와 통일) */
+  --max-width:1280px;
+  --container-x: clamp(14px, 3.5vw, 28px);
 }
 
 /* ========== Reset & Base ========== */
@@ -27,30 +28,38 @@ body{
 }
 .container{
   width:100%;
-  max-width:var(—max-width);
+  max-width:var(--max-width);
   margin:0 auto;
   padding-left:var(--container-x);
   padding-right:var(--container-x);
 }
 
-/* ========== Navigation ========== */
+/* ========== Navigation (공통) ========== */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  mix-blend-mode:difference;
-  background:transparent;
-  transition: background-color .28s ease, box-shadow .28s ease, mix-blend-mode .28s ease, backdrop-filter .28s ease;
-}
-.nav.scrolled{
-  mix-blend-mode:normal;
-  background:rgba(17,17,17,.88);
-  backdrop-filter:saturate(160%) blur(6px);
-  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  background:transparent; /* 항상 투명 */
+  box-shadow:none; backdrop-filter:none; /* 스크롤에 반응 없음 */
 }
 .nav .nav-logo{
-  font-weight:700; line-height:1.1; text-decoration:none; color:#fff; font-size:1.1rem; letter-spacing:.2px;
+  font-weight:700; line-height:1.1; text-decoration:none;
+  color:#111; font-size:1.1rem; letter-spacing:.2px;
 }
+.nav .nav-links a{
+  text-decoration:none; color:#111; margin-left:1.8rem; font-size:.98rem;
+  transition:opacity .2s ease, color .2s ease;
+}
+.nav .nav-links a:hover{ color:var(--accent); }
+@media (max-width:720px){
+  .nav{ padding:16px var(--container-x); }
+  .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
+  .nav .nav-logo{ font-size: clamp(.92rem, 4.2vw, 1.08rem); }
+}
+/* 스크롤 상태 클래스는 더 이상 사용하지 않음 */
+.nav.scrolled{ background:transparent; box-shadow:none; backdrop-filter:none; }
+
+
 /* 모바일에서만 로고 크기 점진 축소 (웹은 그대로 1.1rem 유지) */
 @media (max-width: 720px){
   .nav .nav-logo{
@@ -168,21 +177,10 @@ body{
 }
 
 /* 이미지 섹션 공통 */
-.image-section img {
-  max-width: 100%;
-  height: auto;
-  display: block;         /* 기본은 보이게 */
-}
-
-/* 기본: 모바일 우선 → 모바일 이미지 보이게, 데스크톱 이미지 숨김 */
-.mobile-img { display: block; }
-.desktop-img { display: none; }
-
-/* 721px 이상(데스크톱/태블릿): 데스크톱 이미지 보이게, 모바일 숨김 */
-@media (min-width: 721px) {
-  .mobile-img { display: none; }
-  .desktop-img { display: block; }
-}
+.image-section img{ max-width:100%; height:auto; display:block; }
+.mobile-img{ display:block; }
+.desktop-img{ display:none; }
+@media (min-width:721px){ .mobile-img{ display:none; } .desktop-img{ display:block; } }
 
 
 
@@ -235,22 +233,13 @@ a:focus-visible, button:focus-visible{
   outline-offset: 2px;
 }
 /* Scroll Text: 양옆 풀 블리드 */
-.scroll-text .container{
-  max-width: 100%;          /* 1280px 제한 해제 → 화면 끝까지 */
-  padding-left: 0;          /* 좌우 패딩 제거 */
-  padding-right: 0;
-}
-
-.scroll-viewport{
-  padding-left: 0 !important;  /* 혹시 남은 패딩이 있으면 제거 */
-  padding-right: 0 !important;
-}
-
-/* 텍스트가 진짜로 화면 끝까지 붙도록 */
-.scroll-inner{
-  margin-left: 0;
-  margin-right: 0;
-}
+/* ========== Scroll Text (마키) ========== */
+.scroll-text{ margin-top:64px; min-height: calc(100vh - 64px);
+  display:flex; align-items:flex-end; background:#fff; border-bottom:1px solid var(--line); position:relative; }
+.scroll-viewport{ overflow:hidden; width:100%; padding: 0 0 3.5rem 0; }
+.scroll-inner{ display:flex; gap:5vw; white-space:nowrap; will-change:transform; animation: marquee 15s linear infinite; }
+.scroll-inner span{ font-size: clamp(64px, 18vw, 240px); font-weight:300; color:#000; letter-spacing:-.02em; line-height:1; display:inline-block; }
+@keyframes marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
 
 /* (선택) 문구 간 간격만 유지하고 싶다면 gap 그대로 두세요.
    여백도 완전 제거하고 싶다면 gap도 0으로 가능
@@ -271,3 +260,15 @@ a:focus-visible, button:focus-visible{
 .btn:hover {
   background-color: #333;
 }
+
+/* 밑으로 안내 화살표 */
+.scroll-cue{
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:10px; width:44px; height:44px; border-radius:999px;
+  border:1px solid rgba(0,0,0,.18); background:#fff; color:#111;
+  display:grid; place-items:center; cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  animation: cue-bounce 1.6s ease-in-out infinite;
+}
+.scroll-cue:hover{ background:#111; color:#fff; }
+@keyframes cue-bounce{ 0%,100%{ transform:translate(-50%,0); } 50%{ transform:translate(-50%, -6px); } }

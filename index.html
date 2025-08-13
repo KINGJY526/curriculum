@@ -22,6 +22,16 @@
   <section class="scroll-text" aria-hidden="true">
     <div class="container">
       <div class="scroll-viewport">
+        <div class="scroll-viewport">
+          <div class="scroll-inner">
+            <span>Design Convergence Design Convergence Design Convergence Design Convergence Design Convergence</span>
+          </div>
+        </div>
+        <button class="scroll-cue" type="button" aria-label="아래로 이동">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
         <div class="scroll-inner">
           <span>Design Convergence Design Convergence Design Convergence Design Convergence Design Convergence</span>
         </div>
@@ -69,8 +79,9 @@
 
   <!-- 이미지 섹션 -->
   <section class="image-section">
-    <!-- 웹 버전 이미지 -->
-    <img src="mv1.jpg" alt="웹 버전 안내 이미지" class="desktop-img">
+    <div class="container">
+      <img src="mv1.jpg" alt="웹 버전 안내 이미지" class="desktop-img">
+    </div>
   </section>
 
 
@@ -106,16 +117,7 @@
     </div>
   </footer>
 
-  <script>
-    // 네비게이션 배경 전환
-    const nav = document.querySelector('.nav');
-    const onScroll = () => {
-      if (window.scrollY > 60) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-
+   <script>
     // 섹션 페이드인
     document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries) => {
@@ -123,6 +125,15 @@
       }, { threshold: 0.2 });
       document.querySelectorAll('.fade-in-target').forEach(el => observer.observe(el));
     });
+
+    // 아래로 이동 화살표
+    const cue = document.querySelector('.scroll-cue');
+    if (cue){
+      cue.addEventListener('click', ()=>{
+        const next = document.querySelector('.spacer') || document.querySelector('.service-section');
+        if (next) next.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    }
   </script>
 </body>
 </html>
