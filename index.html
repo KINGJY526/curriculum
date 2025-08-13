@@ -6,14 +6,13 @@
   <title>디자인컨버전스 | 메인</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-7" />
+  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-8" />
 </head>
 <body>
   <!-- 고정 네비게이션 (시간표 링크 제거) -->
   <nav class="nav" aria-label="주요 메뉴">
     <a href="index.html" class="nav-logo">DESIGN<br>CONVERGENCE</a>
     <div class="nav-links">
-      <a href="index.html" aria-current="page">Main</a>
       <a href="curriculum.html">이수체계도</a>
     </div>
   </nav>
@@ -135,42 +134,43 @@
   </footer>
 
   <script>
-     // 네비 실제 높이를 CSS 변수로 반영 (두 줄 로고 대응)
-    (function setNavH(){
-      const nav = document.querySelector('.nav');
-      if(!nav) return;
-      const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+     // 네비 높이 변수 동기화 (두 줄 로고 대비)
+    (function(){
+      const nav=document.querySelector('.nav'); if(!nav) return;
+      const setH=()=>document.documentElement.style.setProperty('--nav-h', nav.offsetHeight+'px');
       setH(); addEventListener('resize', setH);
     })();
 
-  // 첫 방문 때만 화면을 10vh 내려서 시작 (뒤로가기 복원은 건드리지 않음)
-    (function startSlightlyDown(){
-      if (sessionStorage.getItem('mainStartAdjusted')) return;
-      requestAnimationFrame(() => {
-      window.scrollTo({ top: Math.round(window.innerHeight * 0.10) }); // 원하는 만큼 조절 가능: 0.08~0.12
+  // 첫 진입 시 약 10vh 아래에서 시작 (뒤로가기 복원은 존중)
+    (function(){
+    if (performance.getEntriesByType('navigation')[0]?.type === 'reload') return; // 새로고침 제외
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    if (sessionStorage.getItem('mainStartAdjusted')) return;
+    requestAnimationFrame(()=> {
+      window.scrollTo({ top: Math.round(innerHeight*0.10), left: 0 });
       sessionStorage.setItem('mainStartAdjusted','1');
     });
-    })();
+  })();
      // 첫 로드 시 항상 맨 위부터 시작 (브라우저 스크롤 복원 무시)
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.addEventListener('pageshow', () => window.scrollTo(0,0));
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('pageshow', () => window.scrollTo(0,0));
 
     // 섹션 페이드인
-    document.addEventListener('DOMContentLoaded', () => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('in-view'));
-      }, { threshold: 0.2 });
-      document.querySelectorAll('.fade-in-target').forEach(el => observer.observe(el));
-    });
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('in-view'));
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.fade-in-target').forEach(el => observer.observe(el));
+  });
 
     // 아래로 이동 화살표
-    const cue = document.querySelector('.scroll-cue');
-    if (cue){
-      cue.addEventListener('click', ()=>{
-        const next = document.querySelector('.spacer') || document.querySelector('.service-section');
-        if (next) next.scrollIntoView({ behavior:'smooth', block:'start' });
-      });
-    }
-  </script>
+  const cue = document.querySelector('.scroll-cue');
+  if (cue){
+    cue.addEventListener('click', ()=>{
+      const next = document.querySelector('.spacer') || document.querySelector('.service-section');
+      if (next) next.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  }
+</script>
 </body>
 </html>

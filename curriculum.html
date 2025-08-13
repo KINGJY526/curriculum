@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>디자인컨버전스학부 이수체계 (모바일)</title>
-  <link rel="stylesheet" href="styles.css?v=2025-08-14-7" />
+  <link rel="stylesheet" href="styles.css?v=2025-08-14-8" />
 </head>
 <body>
   <!-- 상단 바 -->
@@ -13,7 +13,6 @@
     <nav class="nav" aria-label="주요 메뉴">
       <a href="index.html" class="nav-logo">DESIGN<br>CONVERGENCE</a>
       <div class="nav-links">
-        <a href="index.html" aria-current="page">Main</a>
         <a href="curriculum.html">이수체계도</a>
       </div>
     </nav>
@@ -85,19 +84,12 @@
   </template>
 
   <script>
-    // 네비 높이를 --nav-h에 반영 → 컨트롤바를 정확히 '밀착'
-    (function setNavH(){
-      const nav = document.querySelector('.nav');
-      if(!nav) return;
-      const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+    // 네비 실제 높이를 --nav-h에 동기화 → 컨트롤바가 정확히 붙음
+    (function(){
+      const nav=document.querySelector('.nav'); if(!nav) return;
+      const setH=()=>document.documentElement.style.setProperty('--nav-h', nav.offsetHeight+'px');
       setH(); addEventListener('resize', setH);
     })();
-    // -------- 색상: 카테고리별 통일 --------
-    const CATEGORY_COLORS = {
-      Core: "#2a76ff",
-      Node: "#ff7a1a",
-      Elective: "#7048e8"
-    };
 
     // -------- 과목 설 --------
     const courseDescriptions = {

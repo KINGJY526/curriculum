@@ -26,8 +26,6 @@ body{
 }
 
 /* ========== Navigation (공통) ========== */
-/* 네비: 페이지 배경과 동일 + 밑줄 금지 */
-/* 네비: 밑줄 금지 + 배경 동일 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
@@ -36,30 +34,34 @@ body{
   border-bottom:1px solid var(--line);
 }
 .nav .nav-logo,
-.nav .nav-logo:visited,
-.nav .nav-links a,
-.nav .nav-links a:visited{
+.nav .nav-links a{
   color:#111 !important;
-  text-decoration:none !important;
+  text-decoration:none !important;   /* 밑줄 제거 */
   font-weight:700;
 }
 
-/* 컨트롤 바: 네비 바로 아래 ‘완전 밀착’ */
+/* 컨트롤 바: 네비 바로 아래 '붙임' */
 .controls{
-  position: sticky;
-  top: var(--nav-h);        /* ← 위의 JS가 실제 높이로 맞춰줌 */
-  z-index: 9;
-  background: var(--bg);
-  padding: 4px var(--container-x) 4px;  /* ← 위/아래 여백 더 축소 */
+  position:sticky;
+  top:var(--nav-h);
+  z-index:900;
+  background:var(--bg);
+  padding:6px var(--container-x) 6px;   /* 위/아래 여백 축소 */
   border-bottom:1px solid var(--line);
-  margin:0;                                   /* 여백 제거 */
+  margin:0;                             /* 바깥 여백 제거 */
 }
 
-/* 탭·칩 사이도 '붙이기' */
-.tabs{ display:flex; gap:7px; overflow:auto; padding-bottom:2px; } /* 살짝만 */
+/* 학기 탭/카테고리 칩 간격 최소화 */
+.tabs{ display:flex; gap:6px; overflow:auto; padding-bottom:2px; }
 .chips{ margin-top:2px; display:flex; gap:8px; overflow:auto; }
 
-/* 칩 스타일 유지(깨짐 방지) */
+/* 탭/칩 모양 복구 */
+.tab{
+  white-space:nowrap; padding:8px 12px; border-radius:999px;
+  border:1px solid var(--line); background:#fff; font-size:13px;
+}
+.tab.is-active{ background:#111; color:#fff; border-color:#111; }
+
 .chip{
   appearance:none; -webkit-appearance:none;
   padding:6px 10px; border-radius:999px;
