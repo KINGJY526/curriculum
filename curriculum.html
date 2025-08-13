@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>디자인컨버전스학부 이수체계 (모바일)</title>
-  <link rel="stylesheet" href="styles.css?v=2025-08-14-13" />
+  <link rel="stylesheet" href="styles.css?v=2025-08-14-14" />
 </head>
 <body>
   <!-- 상단 바 -->
@@ -90,6 +90,8 @@
       const setH=()=>document.documentElement.style.setProperty('--nav-h', nav.offsetHeight+'px');
       setH(); addEventListener('resize', setH);
     })();
+
+
 
     // -------- 과목 설 --------
     const courseDescriptions = {
@@ -192,6 +194,14 @@
       { semester: "3-2", category: "Node",     titles: ["Cultural Contents Design(2)", "Visual Language(2)", "Graphic Design & Technology(2)", "Information Design(2)", "UX Design(2)", "Interface Design(2)", "Interactive Media Design(2)", "Contextual Object Design(2)", "Smart Life Design(2)", "Product User Test & Scenario(2)"] },
       { semester: "3-2", category: "Elective", titles: ["인터랙티브3D", "데이터기반디자인스튜디오", "사물인터넷", "모바일디자인", "VR", "디자인전략", "Book Design", "Branding & Media [캡스톤디자인]", "패키지디자인", "Branded Environments", "지속가능디자인", "오브젝트 & 스타일링", "Design Challenge [캡스톤디자인]", "Advanced Typography"] }
     ];
+
+    // 과목별 상세 하단 이미지
+    const courseImages = {
+      "Creative Thinking(1)": "CT1.jpg",
+      "Making Workshop(1)": "MW1.jpg",
+      "Visual Studio(1)": "VS1.jpg",
+      "Interaction Lab(1)": "IL1.jpg"
+    };
 
     // -------- 유틸 --------
     const toId = (title) => title.replace(/\s+/g, "_").replace(/[^\w가-힣()&\-\[\]]/g, "").slice(0,40);
@@ -332,6 +342,17 @@ let currentCategory = "ALL";
             }
           </div>
             </div>`;
+
+            // 과목별 이미지가 있으면 바텀에 붙이기
+            const imgSrc = courseImages[course.title];
+            if (imgSrc) {
+              const fig = document.createElement("figure");
+              fig.className = "sheet-image";
+              fig.innerHTML = `
+    <img src="${imgSrc}" alt="${course.title} 이미지" loading="lazy" />
+              `;
+              sheetBody.appendChild(fig);
+            }
 
       // 초기 상태: 선택 없음 → 버튼 비활성
             pendingNodeInSheet = null;
