@@ -204,6 +204,11 @@
       const b = parseInt(m.substring(4,6),16);
       return `rgba(${r},${g},${b},${a})`;
     };
+    const CATEGORY_COLORS = {
+  Core: "#2B73FF",      // 파란 Core
+  Node: "FF7A1B",      // 노랑 Node
+  Elective: "#7B3FE4"   // 보라 Elective
+};
 
     // -------- RAW → COURSES --------
 const COURSES = RAW.flatMap(row =>
