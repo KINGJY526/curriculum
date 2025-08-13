@@ -27,6 +27,7 @@ body{
 
 /* ========== Navigation (공통) ========== */
 /* 네비: 페이지 배경과 동일 + 밑줄 금지 */
+/* 네비: 밑줄 금지 + 배경 동일 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
@@ -43,48 +44,30 @@ body{
   font-weight:700;
 }
 
-@media (max-width:720px){
-  .nav{ padding:16px var(--container-x); }
-  .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
-  .nav .nav-logo{ font-size: clamp(.92rem, 4.2vw, 1.08rem); }
-}
-/* 스크롤 상태 클래스는 더 이상 사용하지 않음 */
-.nav.scrolled{ background:transparent; box-shadow:none; backdrop-filter:none; }
-
-.topbar{ height:0; padding:0; margin:0; }
-
-
-
-/* 컨트롤 바: 네비 바로 아래 ‘붙이기’ + 컴팩트 */
+/* 컨트롤 바: 네비 바로 아래 ‘완전 밀착’ */
 .controls{
-  position: sticky; top: var(--nav-h); z-index:9;
+  position: sticky;
+  top: var(--nav-h);        /* ← 위의 JS가 실제 높이로 맞춰줌 */
+  z-index: 9;
   background: var(--bg);
-  padding: 6px var(--container-x) 6px;     /* ← 위/아래 여백 축소 */
+  padding: 4px var(--container-x) 4px;  /* ← 위/아래 여백 더 축소 */
   border-bottom:1px solid var(--line);
-  margin:0;                                /* ← 아래 마진 제거 */
+  margin:0;                                   /* 여백 제거 */
 }
 
-/* 학기 탭: 간격 7px(=1px 줄임) + 스크롤바 숨김 */
-.tabs{ display:flex; gap:7px; overflow:auto; padding-bottom:6px; }
-.tabs::-webkit-scrollbar{ display:none; }
-.tab{
-  appearance:none; -webkit-appearance:none;
-  white-space:nowrap; padding:8px 12px; border-radius:999px;
-  border:1px solid var(--line); background:#fff; font-size:13px;
-}
-.tab.is-active{ background:#111; color:#fff; border-color:#111; }
+/* 탭·칩 사이도 '붙이기' */
+.tabs{ display:flex; gap:7px; overflow:auto; padding-bottom:2px; } /* 살짝만 */
+.chips{ margin-top:2px; display:flex; gap:8px; overflow:auto; }
 
-/* 카테고리 칩(코어/노드/일렉티브) 스타일 복구 + 밀착 */
-.chips{ margin-top:4px; display:flex; gap:8px; overflow:auto; }
-.chips::-webkit-scrollbar{ display:none; }
+/* 칩 스타일 유지(깨짐 방지) */
 .chip{
   appearance:none; -webkit-appearance:none;
   padding:6px 10px; border-radius:999px;
-  background:var(--chip); color:#333; font-size:12px;
-  border:1px solid transparent;           /* ← 테두리 안 보이게 */
-  font-weight:600;
+  background:var(--chip); color:#333; font-size:12px; font-weight:600;
+  border:1px solid transparent;
 }
 .chip.is-active{ background:#111; color:#fff; border-color:#111; }
+
 
 /* 리스트는 그대로 */
 .list{ padding:14px var(--container-x); display:grid; gap:12px; scroll-margin-top: calc(var(--nav-h) + 8px); }

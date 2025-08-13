@@ -108,7 +108,7 @@ body{
   position:absolute; inset:0;
   writing-mode:vertical-rl; text-orientation:mixed; white-space:nowrap;
   font-weight:300; font-size:clamp(18px,5.2vw,28px); line-height:1; color:#000;
-  animation:v-scroll 18s linear infinite;
+  animation:v-scroll 12s linear infinite;
 }
 .v-track .chunk{ display:inline-block; padding-block:22px; }
 @keyframes v-scroll{ from{transform:translateY(0)} to{transform:translateY(-50%)} }

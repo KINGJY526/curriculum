@@ -6,7 +6,7 @@
   <title>디자인컨버전스 | 메인</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-6" />
+  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-7" />
 </head>
 <body>
   <!-- 고정 네비게이션 (시간표 링크 제거) -->
@@ -135,6 +135,22 @@
   </footer>
 
   <script>
+     // 네비 실제 높이를 CSS 변수로 반영 (두 줄 로고 대응)
+    (function setNavH(){
+      const nav = document.querySelector('.nav');
+      if(!nav) return;
+      const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+      setH(); addEventListener('resize', setH);
+    })();
+
+  // 첫 방문 때만 화면을 10vh 내려서 시작 (뒤로가기 복원은 건드리지 않음)
+    (function startSlightlyDown(){
+      if (sessionStorage.getItem('mainStartAdjusted')) return;
+      requestAnimationFrame(() => {
+      window.scrollTo({ top: Math.round(window.innerHeight * 0.10) }); // 원하는 만큼 조절 가능: 0.08~0.12
+      sessionStorage.setItem('mainStartAdjusted','1');
+    });
+    })();
      // 첫 로드 시 항상 맨 위부터 시작 (브라우저 스크롤 복원 무시)
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.addEventListener('pageshow', () => window.scrollTo(0,0));
