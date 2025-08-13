@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>디자인컨버전스학부 이수체계 (모바일)</title>
-  <link rel="stylesheet" href="styles.css?v=2025-08-14-9" />
+  <link rel="stylesheet" href="styles.css?v=2025-08-14-10" />
 </head>
 <body>
   <!-- 상단 바 -->
@@ -158,7 +158,7 @@
       "Graphic Design & Technology(2)": "그래픽 디자인을 디지털/뉴미디어 관점에서 심화 학습한다. 고급 전자출판, 전자편집, 전통적 디자인에 디지털 그래픽 요소가 가미된 movie intro 등 전통적 그래픽디자인에 기술을 접목하여 새로운 영역을 탐구해 나간다.",
       "Information Design(2)": "Information Design(1)의 심화 과목으로 정적 인포그래픽에서 응용된 동적인 다이나믹 인포메이션 디자인, 데이터 비주얼라이제이션, 그리고 피지컬과 연계된 인터랙티브 인포메이션디자인까지 동적 인터랙티브 인포메이션 디자인의 경험을 목표로 한다. 정보디자인의 원리, 요소, 방법, 정보 조직화 및 의미생성, 지각심리 등 이론적 내용을 심화하며, 정보 시각화의 다양한 케이스 스터디와 실습과제를 통해 정보시각화 유형과 방법을 이해한다. 플랫폼의 성격에 따라 인터페이스디자인과 인터랙션 디자인을 연계하여 실습과제를 진행한다.",
       "UX Design(2)": "UX DESIGN(1)의 심화과목으로 서비스 및 시스템 디자인의 관점에서 디자인을 평가하는 다양한 방법을 실습하고 평가 결과를 디자인 개선에 반영하고 사용자 경험을 관리하는 UX 디자인을 학습한다. UX의 지속적인 관리를 통한 비즈니스 도구로서의 UX 디자인을 경험한다.",
-      "Interface Design(2": "Interface Design(1)의 심화과목으로 트렌드, 기술, 사용 환경, 제약사항 등 거시적, 미시적 관점의 근 미래 인터페이스 디자인 리서치를 통해 원형인터페이스, 투명 및 플렉서블 인터페이스 등과 같은 확장 인터페이스 디자인에 대해 이해하고, 각 인터페이스 성격에 맞는 인터페이스디자인을 제작해 보는데 목적을 둔다. 본 수업을 통해 정보디자인과 인터랙션디자인의 연계를 바탕으로 각 플랫폼에 적합한 피지컬 인터페이스의 폼 팩터 구축과 디지털인터페이스의 GUI컴포넌트 시각화 방법을 경험하며 그에 따른 프로토타입을 제작한다.",
+      "Interface Design(2)": "Interface Design(1)의 심화과목으로 트렌드, 기술, 사용 환경, 제약사항 등 거시적, 미시적 관점의 근 미래 인터페이스 디자인 리서치를 통해 원형인터페이스, 투명 및 플렉서블 인터페이스 등과 같은 확장 인터페이스 디자인에 대해 이해하고, 각 인터페이스 성격에 맞는 인터페이스디자인을 제작해 보는데 목적을 둔다. 본 수업을 통해 정보디자인과 인터랙션디자인의 연계를 바탕으로 각 플랫폼에 적합한 피지컬 인터페이스의 폼 팩터 구축과 디지털인터페이스의 GUI컴포넌트 시각화 방법을 경험하며 그에 따른 프로토타입을 제작한다.",
       "Interactive Media Design(2)": "Interactive Media Design(1)과 연계되어 진행되는 과목이다. 인터렉션을 통해 메시지를 전달하기 위한 미디어를 기획하고 디자인하여 제작한다. 미디어의 형태는 인터액티브 그래픽스, 웹사이트, 모바일컴퓨팅, 피지컬 오브젝트, 공공설치, 미디어 파사드, 미디어아트 등으로 다양하게 나타날 수 있다. 학생들은 메시지를 전달하기 위한 커뮤니케이션의 언어로서 인터렉션의 특성을 이해하고 고유한 어법을 탐구하여 인터렉션 디자이너로서의 역량을 기른다.",
       "Contextual Object Design(2)": "Contextual Object Design(1)의 심화과정으로서, 사물과 인간사이의 상호작용성을 높여주는 콘텐츠, 프로세스, UI, UX 등을 결합하여 사용성의 개선 및 경험의 혁신을 체험한다.",
       "Smart Life Design(2)": "Smart Life Design(1)의 연계과목으로서, 다양한 테크놀로지를 통해 우리의 생활을 보다 편리하고 특별하게 만드는데 기여할 수 있는 오브젝트와 스페이스를 제안하고 연출하는 능력 배양에 목표를 둔다.",
@@ -204,42 +204,47 @@
       const b = parseInt(m.substring(4,6),16);
       return `rgba(${r},${g},${b},${a})`;
     };
+    const CATEGORY_COLORS = {
+  Core: "#2B73FF",      // 파란 Core
+  Node: "#6B7280",      // 회색 Node
+  Elective: "#7B3FE4"   // 보라 Elective
+};
 
     // -------- RAW → COURSES --------
-    const COURSES = RAW.flatMap(row =>
-      row.titles.map(t => ({
-        id: toId(t),
-        title: t,
-        semester: row.semester,
-        category: row.category,
-        description: courseDescriptions[t] || "설명 없음",
-        relatedNodes: []
-      }))
-      );
+const COURSES = RAW.flatMap(row =>
+  row.titles.map(t => ({
+    id: toId(t),
+    title: t,
+    semester: row.semester,
+    category: row.category,
+    description: courseDescriptions[t] || "설명 없음",
+    relatedNodes: []
+  }))
+  );
 
     // -------- 연계 노드 그룹(행님 제공) → 매핑 --------
-    const groupData = [
-      { name: "Interactive Media Design", subjects: ["Interaction Lab(1)", "Interaction Lab(3)", "사운드디자인", "Interactive Media Design(1)", "크리에이티브코딩", "인터렉티브 스토리텔링", "Interactive Media Design(2)", "인터랙티브3D", "데이터기반디자인스튜디오", "사물인터넷"] },
-      { name: "Interface Design", subjects: ["Interaction Lab(1)","색채의 이해", "Visual Studio(2)","Interaction Lab(3)", "웹디자인", "컬러플래닝", "Typography(2)", "Interface Design(1)", "인터렉티브 스토리텔링", "Interface Design(2)", "모바일디자인", "VR", "사물인터넷"] },
-      { name: "UX Design", subjects: ["Interaction Lab(1)", "Interaction Lab(3)", "Motion Graphics(1)","Motion Graphics(2)","3D 모션그래픽스(1)", "Typography(2)", "웹디자인", "UX Design(1)", "인터렉티브 스토리텔링", "유니버셜 디자인", "Big Data", "3D 모션그래픽스(2)", "UX Design(2)", "지속가능디자인", "VR", "디자인전략"] },
-      { name: "Information Design", subjects: ["Interaction Lab(1)", "Visual Studio(2)", "Interaction Lab(3)", "Motion Graphics(1)", "Typography(2)", "웹디자인", "Motion Graphics(2)", "Information Design(1)", "Big Data", "3D 모션그래픽스(2)", "Information Design(2)", "VR", "모바일디자인"] },
-      { name: "Graphic Design & Technology", subjects: ["Visual Studio(2)", "Typography(2)", "Graphic Design & Technology(1)", "Communication & Ideation", "편집디자인", "Graphic Design & Technology(2)", "Book Design", "Advanced Typography"] },
-      { name: "Cultural Contents Design", subjects: ["기초사진", "Visual Studio(2)", "기초영상", "카피라이팅", "디지털포토그래피", "Typography(2)", "Advertising Design", "Cultural Contents Design(1)", "브랜드디자인", "Identity & Contents Design", "Cultural Contents Design(2)", "디자인전략", "Branding & Media [캡스톤디자인]", "패키지디자인"] },
-      { name: "Visual Language", subjects: ["Visual Studio(2)", "콘셉트드로잉", "Typography(2)", "일러스트레이션", "Visual Language(1)", "편집디자인", "Identity & Contents Design", "Visual Essay", "Visual Language(2)", "Book Design", "Branding & Media [캡스톤디자인]", "Advanced Typography"] },
-      { name: "Product User Test & Scenario", subjects: ["Making Workshop(1)", "Making Workshop(3)", "Emotional Design", "프로덕트 아뜰리에", "Product User Test & Scenario(1)", "비주얼머천다이징", "커뮤니케이션디자인", "Product User Test & Scenario(2)", "Design Challenge [캡스톤디자인]", "Branded Environments", "디자인전략", "지속가능디자인"] },
-      { name: "Contextual Object Design", subjects: ["테크니컬스케치 & 렌더링","Motion Graphics(1)", "3D 오브젝트 모델링(1)","3D 오브젝트 모델링(2)", "Motion Graphics(2)", "Material Study", "Contextual Object Design(1)", "CMF 디자인", "Contextual Object Design(2)", "오브젝트 & 스타일링", "패키지 디자인", "Design Challenge [캡스톤디자인]"] },
-      { name: "Smart Life Design", subjects: ["Making Workshop(1)", "Making Workshop(3)", "3D 오브젝트 모델링(1)", "3D 오브젝트 모델링(2)", "디지털메이커스랩", "Smart Life Design(1)", "유니버셜디자인", "Smart Life Design(2)", "지속가능디자인", "사물인터넷", "모바일디자인"] }
-    ];
-    const byNormTitle = new Map(COURSES.map(c => [norm(c.title), c]));
-    groupData.forEach(g => g.subjects.forEach(s => {
-      const t = byNormTitle.get(norm(s));
-      if (t && !t.relatedNodes.includes(g.name)) t.relatedNodes.push(g.name);
-    }));
-    const GROUP_BY_NAME = new Map(groupData.map(g => [g.name, new Set(g.subjects.map(s => norm(s)))]));
+const groupData = [
+  { name: "Interactive Media Design", subjects: ["Interaction Lab(1)", "Interaction Lab(3)", "사운드디자인", "Interactive Media Design(1)", "크리에이티브코딩", "인터렉티브 스토리텔링", "Interactive Media Design(2)", "인터랙티브3D", "데이터기반디자인스튜디오", "사물인터넷"] },
+  { name: "Interface Design", subjects: ["Interaction Lab(1)","색채의 이해", "Visual Studio(2)","Interaction Lab(3)", "웹디자인", "컬러플래닝", "Typography(2)", "Interface Design(1)", "인터렉티브 스토리텔링", "Interface Design(2)", "모바일디자인", "VR", "사물인터넷"] },
+  { name: "UX Design", subjects: ["Interaction Lab(1)", "Interaction Lab(3)", "Motion Graphics(1)","Motion Graphics(2)","3D 모션그래픽스(1)", "Typography(2)", "웹디자인", "UX Design(1)", "인터렉티브 스토리텔링", "유니버셜 디자인", "Big Data", "3D 모션그래픽스(2)", "UX Design(2)", "지속가능디자인", "VR", "디자인전략"] },
+  { name: "Information Design", subjects: ["Interaction Lab(1)", "Visual Studio(2)", "Interaction Lab(3)", "Motion Graphics(1)", "Typography(2)", "웹디자인", "Motion Graphics(2)", "Information Design(1)", "Big Data", "3D 모션그래픽스(2)", "Information Design(2)", "VR", "모바일디자인"] },
+  { name: "Graphic Design & Technology", subjects: ["Visual Studio(2)", "Typography(2)", "Graphic Design & Technology(1)", "Communication & Ideation", "편집디자인", "Graphic Design & Technology(2)", "Book Design", "Advanced Typography"] },
+  { name: "Cultural Contents Design", subjects: ["기초사진", "Visual Studio(2)", "기초영상", "카피라이팅", "디지털포토그래피", "Typography(2)", "Advertising Design", "Cultural Contents Design(1)", "브랜드디자인", "Identity & Contents Design", "Cultural Contents Design(2)", "디자인전략", "Branding & Media [캡스톤디자인]", "패키지디자인"] },
+  { name: "Visual Language", subjects: ["Visual Studio(2)", "콘셉트드로잉", "Typography(2)", "일러스트레이션", "Visual Language(1)", "편집디자인", "Identity & Contents Design", "Visual Essay", "Visual Language(2)", "Book Design", "Branding & Media [캡스톤디자인]", "Advanced Typography"] },
+  { name: "Product User Test & Scenario", subjects: ["Making Workshop(1)", "Making Workshop(3)", "Emotional Design", "프로덕트 아뜰리에", "Product User Test & Scenario(1)", "비주얼머천다이징", "커뮤니케이션디자인", "Product User Test & Scenario(2)", "Design Challenge [캡스톤디자인]", "Branded Environments", "디자인전략", "지속가능디자인"] },
+  { name: "Contextual Object Design", subjects: ["테크니컬스케치 & 렌더링","Motion Graphics(1)", "3D 오브젝트 모델링(1)","3D 오브젝트 모델링(2)", "Motion Graphics(2)", "Material Study", "Contextual Object Design(1)", "CMF 디자인", "Contextual Object Design(2)", "오브젝트 & 스타일링", "패키지 디자인", "Design Challenge [캡스톤디자인]"] },
+  { name: "Smart Life Design", subjects: ["Making Workshop(1)", "Making Workshop(3)", "3D 오브젝트 모델링(1)", "3D 오브젝트 모델링(2)", "디지털메이커스랩", "Smart Life Design(1)", "유니버셜디자인", "Smart Life Design(2)", "지속가능디자인", "사물인터넷", "모바일디자인"] }
+];
+const byNormTitle = new Map(COURSES.map(c => [norm(c.title), c]));
+groupData.forEach(g => g.subjects.forEach(s => {
+  const t = byNormTitle.get(norm(s));
+  if (t && !t.relatedNodes.includes(g.name)) t.relatedNodes.push(g.name);
+}));
+const GROUP_BY_NAME = new Map(groupData.map(g => [g.name, new Set(g.subjects.map(s => norm(s)))]));
 
     // -------- 상태 --------
-    let currentSemester = "ALL";
-    let currentCategory = "ALL";
+let currentSemester = "ALL";
+let currentCategory = "ALL";
     let selectedNode = null;       // 하이라이트된 노드 이름
     let pendingNodeInSheet = null; // 시트 내에서 선택해 둔 노드
 
