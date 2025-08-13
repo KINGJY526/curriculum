@@ -94,6 +94,7 @@ body{
   background:#fff;
   border-bottom:1px solid var(--line);
   overflow:hidden;                     /* ← 트랙/텍스트 클리핑 */
+  position: relative;
 }
 .hero-vertical .container.hero-frame{
   position:relative;
@@ -124,26 +125,20 @@ body{
 /* 아래 화살표 */
 .scroll-cue{
   position:absolute;
-  left:0;
-  right:0;
-  bottom:14px;               /* 필요하면 10~14px 취향대로 */
-  margin-inline:auto;        /* 가로 중앙 정렬 (Safari 안정) */
-  width:56px;
-  height:56px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.18);
-  background:#fff;
-  color:#111;
-  display:grid;
-  place-items:center;
+  left:50%;
+  bottom: max(14px, env(safe-area-inset-bottom)); /* 아이폰 홈바 여유 */
+  width:56px; height:56px;
+  border-radius:999px; border:1px solid rgba(0,0,0,.18);
+  background:#fff; color:#111; display:grid; place-items:center;
   box-shadow:0 6px 16px rgba(0,0,0,.08);
-  /* transform: none;  애니메이션에서 transform 쓰면 충돌하니 제거 */
+  transform: translate(-50%, 0);       /* ← X축 중앙 고정 */
+  animation: cue-bounce 1.6s ease-in-out infinite;
 }
 
 /* 점프 애니메이션은 translateY만 사용해서 X축 중앙값을 건드리지 않게 */
 @keyframes cue-bounce{
-  0%,100%{ transform: translateY(0); }
-  50%    { transform: translateY(-6px); }
+  0%,100%{ transform: translate(-50%, 0); }
+  50%    { transform: translate(-50%, -6px); }
 }
 .scroll-cue{ animation: cue-bounce 1.6s ease-in-out infinite; }
 
