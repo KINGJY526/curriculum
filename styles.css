@@ -14,7 +14,6 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
-html, body{ overflow-x:hidden; }     /* 페이지 가로 스크롤바 완전 제거 */
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
@@ -30,54 +29,61 @@ body{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:var(--bg);
-  border-bottom:1px solid var(--line);
+  background:transparent; /* 항상 투명 */
+  box-shadow:none; backdrop-filter:none; /* 스크롤에 반응 없음 */
 }
-.nav .nav-logo,
-.nav .nav-links a{
-  color:#111 !important;
-  text-decoration:none !important;   /* 밑줄 제거 */
-  font-weight:700;
+.nav .nav-logo{
+  font-weight:700; line-height:1.1; text-decoration:none;
+  color:#111; font-size:1.1rem; letter-spacing:.2px;
 }
+/* 상단바 링크 색 보정(여기서도 혹시 덮이면) */
+.nav .nav-links a,
+.nav .nav-links a:visited{ color:#111 !important; }
+@media (max-width:720px){
+  .nav{ padding:16px var(--container-x); }
+  .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
+  .nav .nav-logo{ font-size: clamp(.92rem, 4.2vw, 1.08rem); }
+}
+/* 스크롤 상태 클래스는 더 이상 사용하지 않음 */
+.nav.scrolled{ background:transparent; box-shadow:none; backdrop-filter:none; }
 
-/* 컨트롤바: 네비 바로 아래 고정되고 바깥 여백 제거 */
+
+/* 컨트롤 */
+/* 컨트롤 바: 네비 바로 아래에 들러붙도록 */
 .controls{
   position: sticky;
   top: var(--nav-h);
-  z-index: 900;
+  z-index: 9;
   background: var(--bg);
-  padding: 6px var(--container-x) 6px;  /* 위·아래 6px */
-  margin: 0;                            /* ← 여백 0 */
-  border-bottom: 1px solid var(--line);
+  padding: 8px var(--container-x) 10px;  /* 좌우 여백도 컨테이너에 맞춤 */
+  border-bottom:1px solid var(--line);
+  margin-bottom: var(--controls-gap);
 }
 
-/* 리스트: 컨트롤바와 '붙이기' */
-.list{
-  margin: 0;                             /* 기본 마진 제거 */
-  padding: 8px var(--container-x) 14px;  /* 위쪽만 8px로 얇게 */
+.tabs{
+  display:flex; gap:8px; overflow:auto; padding-bottom:6px;
 }
-
-/* 학기 탭/카테고리 칩 간격 최소화 */
-.tabs{ display:flex; gap:6px; overflow:auto; padding-bottom:2px; }
-.chips{ margin-top:2px; display:flex; gap:8px; overflow:auto; }
-
-/* 탭/칩 모양 복구 */
 .tab{
-  white-space:nowrap; padding:8px 12px; border-radius:999px;
-  border:1px solid var(--line); background:#fff; font-size:13px;
+  white-space:nowrap; padding:8px 12px; border-radius:999px; border:1px solid var(--line);
+  background:#fff; font-size:13px;
 }
 .tab.is-active{ background:#111; color:#fff; border-color:#111; }
-
-.chip{
-  appearance:none; -webkit-appearance:none;
-  padding:6px 10px; border-radius:999px;
-  background:var(--chip); color:#333; font-size:12px; font-weight:600;
-  border:1px solid transparent;
+.chips{
+  margin-top:8px; display:flex; gap:8px; overflow:auto;
 }
-.chip.is-active{ background:#111; color:#fff; border-color:#111; }
+.chip{
+  padding:6px 10px; border-radius:999px; background:var(--chip); color:#333; font-size:12px; border:1px solid transparent;
+}
+.chip.is-active{ background:#111; color:#fff; }
 
-
-
+/* 리스트 & 카드 */
+/* 컨테이너 여백과 맞추려면 리스트에도 좌우 패딩을 컨트롤과 동일하게 */
+.list{
+  padding: 14px var(--container-x);   /* 좌우 여백 통일 */
+  display:grid; gap:12px;
+  /* 컨트롤 영역이 차지하는 높이만큼 자연스러운 여백 (초기 구간 겹침 방지) */
+  scroll-margin-top: calc(var(--nav-h) + 8px);
+}
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:20px; overflow:hidden; cursor:pointer;
@@ -233,12 +239,3 @@ body{
 .btn:hover {
   background-color: #333;
 }
-
-.container{
-  width:100%;
-  max-width:var(--max-width);
-  margin:0 auto;
-  padding-left:var(--container-x);
-  padding-right:var(--container-x);
-}
-
