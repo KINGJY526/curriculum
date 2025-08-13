@@ -18,7 +18,7 @@
 /* ========== Reset & Base ========== */
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
-html, body { overflow-x: hidden; }
+html,body { overflow-x: hidden; }
 body{
   margin:0;
   font-family: 'SUIT', ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", Roboto, sans-serif;
@@ -37,18 +37,21 @@ body{
 
 /* ========== Navigation (공통) ========== */
 /* 네비게이션: 불투명 + 밑줄 제거 */
+/* 네비: 불투명 + 밑줄/보라색 링크 금지 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:#fff;                    /* ← 투명 금지 */
+  background:#fff;
   border-bottom:1px solid var(--line);
-  box-shadow:none; backdrop-filter:none;
 }
+.nav .nav-logo,
+.nav .nav-logo:visited,
 .nav .nav-links a,
 .nav .nav-links a:visited{
   color:#111 !important;
-  text-decoration:none;               /* ← 밑줄 제거 */
+  text-decoration:none !important;    /* ← 밑줄/보라색 방지 */
+  font-weight:700;
 }
 @media (max-width:720px){
   .nav{ padding:16px var(--container-x); }
@@ -83,51 +86,33 @@ body{
   --nav-h:64px;          /* 고정 네비 높이(아래에서 재사용) */
 }
 
-/* 히어로 풀블리드(좌우 여백 제거) */
-/* 히어로 영역 자체에서 클리핑(겹침 방지) */
+/* 히어로: 겹침/밀림 방지 */
 .hero-vertical{
   margin-top: var(--nav-h);
   min-height: calc(100vh - var(--nav-h));
   position: relative;
   background:#fff;
   border-bottom:1px solid var(--line);
-  overflow:hidden;                     /* ← 아래 섹션으로 넘치지 않게 */
+  overflow:hidden;                     /* ← 트랙/텍스트 클리핑 */
 }
-
-/* 히어로 풀블리드 */
 .hero-vertical .container.hero-frame{
   position:relative;
   height: calc(100vh - var(--nav-h));
-  max-width:100%;
-  padding-left:0; padding-right:0;
+  max-width:100%; padding:0;
 }
 
-/* 좌우 세로 마키: 한 줄만, 동일 폭, 네비 아래에서만 보이게 */
-.v-marquee{
-  position:absolute; top:0; bottom:0;
-  width:clamp(56px, 12vw, 90px);
-  overflow:hidden; pointer-events:none;
-  z-index:1;                           /* 텍스트: 로고보다 아래 */
-}
+/* 세로 마키: 한 줄만 위로 흐름 */
+.v-marquee{ position:absolute; top:0; bottom:0; width:clamp(56px,12vw,90px); overflow:hidden; pointer-events:none; z-index:1; }
 .v-left{ left:0; } .v-right{ right:0; }
-
 .v-track{
   position:absolute; inset:0;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  white-space: nowrap;                 /* 한 줄 고정 */
-  font-weight:300;
-  font-size:clamp(18px, 5.2vw, 28px);
-  line-height:1; color:#000;
-  animation: v-scroll 18s linear infinite;
+  writing-mode:vertical-rl; text-orientation:mixed; white-space:nowrap;
+  font-weight:300; font-size:clamp(18px,5.2vw,28px); line-height:1; color:#000;
+  animation:v-scroll 18s linear infinite;
 }
 .v-track .chunk{ display:inline-block; padding-block:22px; }
+@keyframes v-scroll{ from{transform:translateY(0)} to{transform:translateY(-50%)} }
 
-/* 띠지처럼 계속 위로 흐름 */
-@keyframes v-scroll{
-  from{ transform: translateY(0); }
-  to  { transform: translateY(-50%); } /* 반복용 청크 기준 */
-}
 
 /* 중앙 로고 더 키움 + 최상단 배치 */
 .hero-center{ position:absolute; inset:0; display:grid; place-items:center; z-index:2; }
@@ -136,25 +121,20 @@ body{
   height:auto; display:block;
 }
 
-/* 화살표는 처음부터 중앙 하단에 */
+/* 아래 화살표 */
 .scroll-cue{
-  left:50vw; transform:translateX(-50%);
-  bottom:14px; opacity:1; z-index:5;
+  position:absolute; left:50%; transform:translateX(-50%);
+  bottom:14px; width:56px; height:56px;
+  border-radius:999px; border:1px solid rgba(0,0,0,.18);
+  background:#fff; color:#111; display:grid; place-items:center; z-index:3;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  animation:cue-bounce 1.6s ease-in-out infinite;
 }
+@keyframes cue-bounce{ 0%,100%{ transform:translate(-50%,0)} 50%{ transform:translate(-50%,-6px)} }
 
-
-
-/* 사용자 접근성: 애니메이션 최소화 설정 시 멈춤 */
-@media (prefers-reduced-motion: reduce){
-  .scroll-inner{ animation: none; }
-}
-
-/* ========== Spacer ========== */
-.spacer{
-  height: 32vh;
-  background: #f7f7f7;
-  border-bottom:1px solid var(--line);
-}
+/* 설명 섹션 간격 살짝 축소 */
+.spacer{ height:18vh; background:#f7f7f7; border-bottom:1px solid var(--line); }
+.service-section{ background:#f7f7f7; padding: clamp(36px, 8vw, 80px) 0; }  /* ← 간격 ↓ */
 
 /* ========== Service Section ========== */
 .service-section{

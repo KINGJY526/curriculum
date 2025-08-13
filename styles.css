@@ -26,20 +26,23 @@ body{
 }
 
 /* ========== Navigation (공통) ========== */
-/* 네비: 배경을 페이지 배경과 동일 + 밑줄 제거 + 경계선 */
+/* 네비: 페이지 배경과 동일 + 밑줄 금지 */
 .nav{
   position:fixed; inset-inline:0; top:0; z-index:1000;
   display:flex; align-items:center; justify-content:space-between;
   padding:20px var(--container-x);
-  background:var(--bg);               /* ← 페이지 배경과 동일 */
+  background:var(--bg);
   border-bottom:1px solid var(--line);
-  box-shadow:none; backdrop-filter:none;
 }
+.nav .nav-logo,
+.nav .nav-logo:visited,
 .nav .nav-links a,
 .nav .nav-links a:visited{
   color:#111 !important;
-  text-decoration:none;               /* ← 밑줄 제거 */
+  text-decoration:none !important;
+  font-weight:700;
 }
+
 @media (max-width:720px){
   .nav{ padding:16px var(--container-x); }
   .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
@@ -48,34 +51,45 @@ body{
 /* 스크롤 상태 클래스는 더 이상 사용하지 않음 */
 .nav.scrolled{ background:transparent; box-shadow:none; backdrop-filter:none; }
 
+.topbar{ height:0; padding:0; margin:0; }
 
-/* 컨트롤 */
-/* 컨트롤 바: 네비 바로 아래에 들러붙도록 */
-/* 컨트롤 바(탭/칩) */
+
+
+/* 컨트롤 바: 네비 바로 아래 ‘붙이기’ + 컴팩트 */
 .controls{
-  position: sticky; top: var(--nav-h); z-index: 9;
+  position: sticky; top: var(--nav-h); z-index:9;
   background: var(--bg);
-  padding: 8px var(--container-x) 10px;
+  padding: 6px var(--container-x) 6px;     /* ← 위/아래 여백 축소 */
   border-bottom:1px solid var(--line);
-  margin-bottom: var(--controls-gap);
+  margin:0;                                /* ← 아래 마진 제거 */
 }
 
-/* 학기 탭: 간격 8px → 7px (1px 축소) */
+/* 학기 탭: 간격 7px(=1px 줄임) + 스크롤바 숨김 */
 .tabs{ display:flex; gap:7px; overflow:auto; padding-bottom:6px; }
 .tabs::-webkit-scrollbar{ display:none; }
-
 .tab{
-  white-space:nowrap; padding:8px 12px; border-radius:999px; border:1px solid var(--line);
-  background:#fff; font-size:13px;
+  appearance:none; -webkit-appearance:none;
+  white-space:nowrap; padding:8px 12px; border-radius:999px;
+  border:1px solid var(--line); background:#fff; font-size:13px;
 }
 .tab.is-active{ background:#111; color:#fff; border-color:#111; }
 
-/* 카테고리 칩(그대로) */
-.chips{ margin-top:8px; display:flex; gap:8px; overflow:auto; }
+/* 카테고리 칩(코어/노드/일렉티브) 스타일 복구 + 밀착 */
+.chips{ margin-top:4px; display:flex; gap:8px; overflow:auto; }
 .chips::-webkit-scrollbar{ display:none; }
+.chip{
+  appearance:none; -webkit-appearance:none;
+  padding:6px 10px; border-radius:999px;
+  background:var(--chip); color:#333; font-size:12px;
+  border:1px solid transparent;           /* ← 테두리 안 보이게 */
+  font-weight:600;
+}
+.chip.is-active{ background:#111; color:#fff; border-color:#111; }
 
-/* 리스트 여백은 유지(겹침 방지) */
+/* 리스트는 그대로 */
 .list{ padding:14px var(--container-x); display:grid; gap:12px; scroll-margin-top: calc(var(--nav-h) + 8px); }
+
+
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:20px; overflow:hidden; cursor:pointer;

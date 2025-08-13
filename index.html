@@ -6,7 +6,7 @@
   <title>디자인컨버전스 | 메인</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@300;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-5" />
+  <link rel="stylesheet" href="mainstyle.css?v=2025-08-14-6" />
 </head>
 <body>
   <!-- 고정 네비게이션 (시간표 링크 제거) -->
@@ -135,6 +135,10 @@
   </footer>
 
   <script>
+     // 첫 로드 시 항상 맨 위부터 시작 (브라우저 스크롤 복원 무시)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('pageshow', () => window.scrollTo(0,0));
+
     // 섹션 페이드인
     document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries) => {
