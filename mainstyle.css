@@ -84,26 +84,19 @@ body{
   --nav-h:64px;          /* 고정 네비 높이(아래에서 재사용) */
 }
 
-.hero-vertical{
-  margin-top: var(--nav-h);
-  min-height: calc(100vh - var(--nav-h));
-  position: relative;
-  background:#fff;
-  border-bottom:1px solid var(--line);
+.hero-vertical .container.hero-frame{
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
 }
+
 .hero-frame{
   position: relative;
   height: calc(100vh - var(--nav-h));
 }
 
 /* 양옆 세로 트랙 */
-.v-marquee{
-  position:absolute;
-  top:0; bottom:0;
-  width: clamp(44px, 12vw, 84px);   /* 세로 텍스트 폭 */
-  overflow:hidden;
-  pointer-events:none;
-}
+.v-marquee{ width: clamp(52px, 12vw, 96px); }
 .v-left{  left:0; }
 .v-right{ right:0; }
 
@@ -131,9 +124,13 @@ body{
   display:grid; place-items:center;
 }
 .hero-center img{
-  width: clamp(96px, 22vw, 200px);
-  height:auto; display:block;
+  width: clamp(84px, 28vw, 160px);   /* 모바일 더 작게 */
+  height:auto;
 }
+@media (min-width:721px){
+  .hero-center img{ width: clamp(120px, 18vw, 220px); }
+}
+
 
 /* 세로 스크롤 애니메이션 */
 @keyframes v-scroll{
@@ -143,14 +140,11 @@ body{
 
 /* 아래로 안내 화살표: 항상 즉시 보이도록 */
 .scroll-cue{
-  position:absolute; left:50%; transform:translateX(-50%);
-  bottom: 10px;
-  width:44px; height:44px; border-radius:999px;
-  border:1px solid rgba(0,0,0,.18); background:#fff; color:#111;
-  display:grid; place-items:center; cursor:pointer; z-index:3;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-  animation: cue-bounce 1.6s ease-in-out infinite;
-  opacity:1; /* 처음부터 보이게 */
+  left: 50vw;               /* 컨테이너가 아니라 뷰포트 기준으로 */
+  transform: translateX(-50%);
+  bottom: 14px;
+  z-index: 5;
+  opacity: 1;
 }
 .scroll-cue:hover{ background:#111; color:#fff; }
 @keyframes cue-bounce{ 0%,100%{ transform:translate(-50%,0);} 50%{ transform:translate(-50%,-6px);} }

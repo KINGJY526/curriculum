@@ -239,3 +239,12 @@ body{
 .btn:hover {
   background-color: #333;
 }
+
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding-left:var(--container-x);
+  padding-right:var(--container-x);
+}
+
