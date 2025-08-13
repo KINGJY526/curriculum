@@ -8,6 +8,8 @@
   --radius:18px;
   --max-width:1280px;
   --container-x: clamp(14px, 3.5vw, 28px);
+  --nav-h:64px;          /* 고정 네비 높이 */
+  --controls-gap: 10px;  /* 컨트롤 아래 여백 */
 }
 
 *{ box-sizing:border-box; }
@@ -19,6 +21,7 @@ body{
   background:var(--bg);
   -webkit-font-smoothing:antialiased;
   line-height:1.4;
+  padding-top: var(--nav-h);
 }
 
 /* ========== Navigation (공통) ========== */
@@ -33,11 +36,9 @@ body{
   font-weight:700; line-height:1.1; text-decoration:none;
   color:#111; font-size:1.1rem; letter-spacing:.2px;
 }
-.nav .nav-links a{
-  text-decoration:none; color:#111; margin-left:1.8rem; font-size:.98rem;
-  transition:opacity .2s ease, color .2s ease;
-}
-.nav .nav-links a:hover{ color:var(--accent); }
+/* 상단바 링크 색 보정(여기서도 혹시 덮이면) */
+.nav .nav-links a,
+.nav .nav-links a:visited{ color:#111 !important; }
 @media (max-width:720px){
   .nav{ padding:16px var(--container-x); }
   .nav .nav-links a{ margin-left:1rem; font-size:.95rem; }
@@ -48,7 +49,17 @@ body{
 
 
 /* 컨트롤 */
-.controls{ position:sticky; top:57px; z-index:9; background:var(--bg); padding:8px 12px 10px; border-bottom:1px solid var(--line);}
+/* 컨트롤 바: 네비 바로 아래에 들러붙도록 */
+.controls{
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 9;
+  background: var(--bg);
+  padding: 8px var(--container-x) 10px;  /* 좌우 여백도 컨테이너에 맞춤 */
+  border-bottom:1px solid var(--line);
+  margin-bottom: var(--controls-gap);
+}
+
 .tabs{
   display:flex; gap:8px; overflow:auto; padding-bottom:6px;
 }
@@ -66,7 +77,13 @@ body{
 .chip.is-active{ background:#111; color:#fff; }
 
 /* 리스트 & 카드 */
-.list{ padding:14px; display:grid; gap:12px; }
+/* 컨테이너 여백과 맞추려면 리스트에도 좌우 패딩을 컨트롤과 동일하게 */
+.list{
+  padding: 14px var(--container-x);   /* 좌우 여백 통일 */
+  display:grid; gap:12px;
+  /* 컨트롤 영역이 차지하는 높이만큼 자연스러운 여백 (초기 구간 겹침 방지) */
+  scroll-margin-top: calc(var(--nav-h) + 8px);
+}
 .card{
   background:var(--card); border:1px solid var(--line);
   border-radius:20px; overflow:hidden; cursor:pointer;

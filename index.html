@@ -18,26 +18,48 @@
     </div>
   </nav>
 
-  <!-- 히어로: 고정 텍스트였던 부분을 삭제하고 아래로 교체 -->
-  <section class="scroll-text" aria-hidden="true">
-    <div class="container">
-      <div class="scroll-viewport">
-        <div class="scroll-viewport">
-          <div class="scroll-inner">
-            <span>Design Convergence Design Convergence Design Convergence Design Convergence Design Convergence</span>
-          </div>
+  <section class="hero-vertical" aria-hidden="true">
+    <div class="container hero-frame">
+      <!-- 왼쪽 세로 마키 -->
+      <div class="v-marquee v-left">
+        <div class="v-track">
+          <span>Design Convergence · Design Convergence · </span>
+          <span>Design Convergence · Design Convergence · </span>
         </div>
-        <button class="scroll-cue" type="button" aria-label="아래로 이동">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="scroll-inner">
-          <span>Design Convergence Design Convergence Design Convergence Design Convergence Design Convergence</span>
+        <!-- 무한 루프용 복제 -->
+        <div class="v-track clone">
+          <span>Design Convergence · Design Convergence · </span>
+          <span>Design Convergence · Design Convergence · </span>
         </div>
       </div>
+
+      <!-- 중앙 로고 -->
+      <div class="hero-center">
+        <!-- 로고 경로 교체 가능: svg 권장 -->
+        <img src="logo.png" alt="Design Convergence 로고">
+      </div>
+
+      <!-- 오른쪽 세로 마키 -->
+      <div class="v-marquee v-right">
+        <div class="v-track">
+          <span>Design Convergence · Design Convergence · </span>
+          <span>Design Convergence · Design Convergence · </span>
+        </div>
+        <div class="v-track clone">
+          <span>Design Convergence · Design Convergence · </span>
+          <span>Design Convergence · Design Convergence · </span>
+        </div>
+      </div>
+
+      <!-- 아래로 이동 화살표 -->
+      <button class="scroll-cue" type="button" aria-label="아래로 이동">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </section>
+
 
 
   <!-- 여백(인트로 공간) -->
@@ -117,7 +139,7 @@
     </div>
   </footer>
 
-   <script>
+  <script>
     // 섹션 페이드인
     document.addEventListener('DOMContentLoaded', () => {
       const observer = new IntersectionObserver((entries) => {
