@@ -193,3 +193,19 @@ body{
 .chip-node-indicator{
   background:#111; color:#fff; border:1px solid #111; font-weight:700;
 }
+
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #111;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #333;
+}
